@@ -80,11 +80,11 @@ public class PersonControllerTest {
 		
 		//mockMvc.perform(post("/persons").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andExpect(status().isOk());
 
-		//String requestjson = "{ \"firstName\": \"John\",\"lastName\":\"Boyd\",\"address\": \"1509 Culver St\", \"city\": \"Culver\", \"zip\":\"97451\", \"phone\": \"841-874-6512\", \"email\": \"jaboyd@email.com\"}";
+		String requestjson = "{ \"firstName\": \"John\",\"lastName\":\"Boyd\",\"address\": \"1509 Culver St\", \"city\": \"Culver\", \"zip\":\"97451\", \"phone\": \"841-874-6512\", \"email\": \"jaboyd@email.com\"}";
 
 		//mockMvc.perform(post("/persons").contentType("application/json").content(requestjson)).andExpect(status().isOk());
 		
-		mockMvc.perform(post("/persons/firstName=John&lastName=Boyd")).andExpect(status().is(200));
+		mockMvc.perform(post("/persons").contentType("application/json").content(requestjson)).andExpect(status().is(200));
 	}
 
 	@Test
