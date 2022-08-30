@@ -23,16 +23,6 @@ public class MapperService {
 
 			Data data = mapper.readValue(new File("src/main/resources/dataa.json"), Data.class);
 
-			System.out.println("");
-
-			System.out.println(Data.getPersons());
-
-			System.out.println(""); 
-			System.out.println(Data.getFirestations());
-
-			System.out.println("");
-			System.out.println(Data.getMedicalrecords());
-
 		} catch (StreamReadException e) {
 
 			System.out.println(" StreamRead Exception ! ");

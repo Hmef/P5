@@ -1,7 +1,5 @@
 package com.openclassrooms.api.model;
 
-import org.springframework.stereotype.Component;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 

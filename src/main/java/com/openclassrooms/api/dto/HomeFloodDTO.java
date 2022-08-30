@@ -4,7 +4,6 @@ import java.util.List;
 
 public class HomeFloodDTO {
 
-	// private List<String> listStationNumber = new ArrayList<String>();
 	private String name;
 	private String phone;
 	private int age;

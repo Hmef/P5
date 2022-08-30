@@ -25,10 +25,6 @@ public class MedicalrecordDTO {
 	private List<String> allergies;
 
 
-	private static final SimpleDateFormat dateFormat
-    = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-
 	public MedicalrecordDTO() {
 		
 	}
@@ -94,28 +90,6 @@ public class MedicalrecordDTO {
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
-
-	
-	// Date Format 
-	public Date getSubmissionDateConverted(String timezone) throws ParseException {
-        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-        return dateFormat.parse(this.birthdate);
-    }
-
-    public void setSubmissionDate(Date date, String timezone) {
-        dateFormat.setTimeZone(TimeZone.getTimeZone(timezone));
-        this.birthdate = dateFormat.format(birthdate);
-    }
-
-	@Override
-	public String toString() {
-		return "Medicalrecord [firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthdate
-				+ ", medications=" + medications + ", allergies=" + allergies + "]";
-	}
-
-
-
-	
 
 
 
