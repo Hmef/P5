@@ -2,7 +2,6 @@ package com.openclassrooms.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Firestation {
 
@@ -35,5 +34,12 @@ public class Firestation {
 	public void setStation(String station) {
 		this.station = station;
 	}
+
+	@Override
+	public String toString() {
+		return "Firestation [address=" + address + ", station=" + station + "]";
+	}
+	
+	
 
 }

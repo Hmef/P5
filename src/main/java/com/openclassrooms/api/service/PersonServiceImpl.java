@@ -26,19 +26,19 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Person savePerson(Person createdperson) {
+	public Person savePerson(Person requestedperson) {
 
 		logger.info(" Saved Person ");
 
 		Person newperson = new Person();
 
-		newperson.setFirstName(createdperson.getFirstName());
-		newperson.setLastName(createdperson.getLastName());
-		newperson.setAddress(createdperson.getAddress());
-		newperson.setCity(createdperson.getCity());
-		newperson.setZip(createdperson.getZip());
-		newperson.setEmail(createdperson.getEmail());
-		newperson.setPhone(createdperson.getPhone());
+		newperson.setFirstName(requestedperson.getFirstName());
+		newperson.setLastName(requestedperson.getLastName());
+		newperson.setAddress(requestedperson.getAddress());
+		newperson.setCity(requestedperson.getCity());
+		newperson.setZip(requestedperson.getZip());
+		newperson.setEmail(requestedperson.getEmail());
+		newperson.setPhone(requestedperson.getPhone());
 
 		persondao.save(newperson);
 
@@ -63,30 +63,54 @@ public class PersonServiceImpl implements PersonService {
 		return null;
 	}
 
+	
 	@Override
-	public Person updatePerson(Person updatedperson, String firstName, String lastName) {
+	public Person updatePerson(Person requestedperson, String firstName, String lastName) {
 
 		logger.info(" Update Person ");
 
 		List<Person> personlist = persondao.getAll();
+		
+		//Person updatedperson = new Person();
 
-		for (Person person : personlist) {
-			if (person.getFirstName().equals(updatedperson.getFirstName())
-					&& person.getLastName().equals(updatedperson.getLastName())) {
+		for (Person updatedperson : personlist) {
+			if (updatedperson.getFirstName().equals(requestedperson.getFirstName())
+					&& updatedperson.getLastName().equals(requestedperson.getLastName())) {
 
+				
+				
 				// person.setFirstName(firstName); // don't change firstName & lastName
 				// person.setLastName(lastName);
-				person.setAddress(updatedperson.getAddress());
-				person.setCity(updatedperson.getCity());
-				person.setZip(updatedperson.getZip());
-				person.setEmail(updatedperson.getEmail());
-				person.setPhone(updatedperson.getPhone());
-
-				persondao.update(person);
-				return person;
+				updatedperson.setAddress(requestedperson.getAddress());
+				updatedperson.setCity(requestedperson.getCity());
+				updatedperson.setZip(requestedperson.getZip());
+				updatedperson.setEmail(requestedperson.getEmail());
+				updatedperson.setPhone(requestedperson.getPhone());
+				
+				persondao.update(updatedperson);
+				
+				return updatedperson;
 			}
 		}
+		
+		
 		return null;
 	}
 
+	@Override
+	public Person getByName(String firstName, String lastName) {
+		
+		List<Person> personlist = persondao.getAll();
+		
+		for(Person person : personlist) {
+			if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				return person;
+			}
+		}
+		
+		return null;
+	}
+
+	
+	
 }

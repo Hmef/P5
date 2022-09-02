@@ -3,12 +3,13 @@ package com.openclassrooms.api.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.api.model.Person;
 import com.openclassrooms.api.repository.Data;
 
-@Service
+@Repository
 public class PersonDAO implements DAO<Person>{
 
 	
@@ -20,19 +21,21 @@ public class PersonDAO implements DAO<Person>{
 	}
 
 	@Override
-	public void save(Person person) {
+	public Person save(Person person) {
 		
 		Data.getPersons().add(person);
-
+		
+		return person;
 	}
 
 
 	@Override
-	public void update(Person person) {
+	public Person update(Person person) {
 
 		Data.getPersons().add(person);
-
 		
+		return person;
+	
 	}
 
 	@Override

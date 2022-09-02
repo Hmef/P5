@@ -82,4 +82,12 @@ public class PersonMedicalRecordDTO {
 		this.allergies = allergies;
 	}
 
+	@Override
+	public String toString() {
+		return "PersonMedicalRecordDTO [name=" + name + ", address=" + address + ", age=" + age + ", email=" + email
+				+ ", medications=" + medications + ", allergies=" + allergies + "]";
+	}
+	
+	
+
 }

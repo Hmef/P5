@@ -17,9 +17,11 @@ public class FirestationDAO implements DAO<Firestation>{
 	}
 
 	@Override
-	public void save(Firestation firestation) {
+	public Firestation save(Firestation firestation) {
 		
 		Data.getFirestations().add(firestation);
+		
+		return firestation;
 	}
 
 	@Override
@@ -30,9 +32,11 @@ public class FirestationDAO implements DAO<Firestation>{
 	}
 
 	@Override
-	public void update(Firestation firestation) {
+	public Firestation update(Firestation firestation) {
 		
 		Data.getFirestations().add(firestation);
+		
+		return firestation;
 		
 	}
 

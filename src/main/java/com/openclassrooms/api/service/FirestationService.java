@@ -10,12 +10,10 @@ public interface FirestationService {
 	
 	List<Firestation> getAllFirestations();
 	
-	void update(Firestation firestation);
+	Firestation save(Firestation firestation);
 	
-	void save(Firestation firestation);
+	void delete(String address, String station);
 	
-	void delete(Firestation firestation);
-	
-	void updateP(Firestation object, String firstname, String lastname);
+	void update(Firestation firestation, String address);
 
 }

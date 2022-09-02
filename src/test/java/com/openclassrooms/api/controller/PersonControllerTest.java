@@ -75,14 +75,9 @@ public class PersonControllerTest {
 		
 		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 		
-		
 		when(personservice.savePerson(any(Person.class))).thenReturn(person);
-		
-		//mockMvc.perform(post("/persons").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isCreated()).andExpect(status().isOk());
 
 		String requestjson = "{ \"firstName\": \"John\",\"lastName\":\"Boyd\",\"address\": \"1509 Culver St\", \"city\": \"Culver\", \"zip\":\"97451\", \"phone\": \"841-874-6512\", \"email\": \"jaboyd@email.com\"}";
-
-		//mockMvc.perform(post("/persons").contentType("application/json").content(requestjson)).andExpect(status().isOk());
 		
 		mockMvc.perform(post("/persons").contentType("application/json").content(requestjson)).andExpect(status().is(200));
 	}
@@ -90,8 +85,11 @@ public class PersonControllerTest {
 	@Test
 	public void updatePersonTest_shouldReturnStatusReturn200() throws Exception {
 
-		when(personservice.updatePerson(new Person(), "Boyd", "John")).thenReturn(new Person());
-		mockMvc.perform(put("/persons/firstName=John&lastName=Boyd")).andExpect(status().is(200));
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
+		when(personservice.updatePerson(any(Person.class), any(), any())).thenReturn(person);
+		String requestjson = "{ \"firstName\": \"John\",\"lastName\":\"Boyd\",\"address\": \"1509 Culver St\", \"city\": \"Culver\", \"zip\":\"97451\", \"phone\": \"841-874-6512\", \"email\": \"jaboyd@email.com\"}";
+		
+		mockMvc.perform(put("/persons/firstName=John&lastName=Boyd").contentType("application/json").content(requestjson)).andExpect(status().is(200));
 
 	}
 

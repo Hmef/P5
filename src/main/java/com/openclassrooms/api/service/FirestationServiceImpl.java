@@ -33,44 +33,57 @@ import com.openclassrooms.api.repository.Data;
 @Service
 public class FirestationServiceImpl implements FirestationService {
 
-	
 	private Logger logger = LoggerFactory.getLogger(FirestationServiceImpl.class);
 
-	//@Autowired
-	//private FirestationDAO firestationdao; 
-	
-	
+	@Autowired
+	private FirestationDAO firestationdao;
+
 	public List<Firestation> getAllFirestations() {
 
 		logger.info("Get All Firestations ");
 
-		//return firestationdao.getAll();
+		return firestationdao.getAll();
+	}
+
+	public Firestation save(Firestation requestedFirestation) {
+		
+		/*
+
+		Firestation createdfirestation = new Firestation();
+
+		createdfirestation.setAddress(requestedFirestation.getAddress());
+		createdfirestation.setStation(requestedFirestation.getStation());
+
+		firestationdao.save(createdfirestation);
+
+		return createdfirestation;
+		*/
 		return null;
+
+	}
+
+	public void delete(String address, String station) {
+
+		/*
+		for (Firestation firestation : firestationdao.getAll()) {
+			if (firestation.getAddress().equals(address) && firestation.getStation().equals(station)) {
+
+				firestationdao.delete(firestation);
+			}
+		}
+		*/
 	}
 
 	
-	
-	public void update(Firestation firestation) {
-
-		
-	}
-
-	public void save(Firestation firestation) {
-
-		
-
-	}
-
-	public void delete(Firestation firestation) {
-
-		
-
-	}
-
-
 	@Override
-	public void updateP(Firestation object, String firstname, String lastname) {
-		
+	public void update(Firestation requestedfirestation, String address) {
+
+		for (Firestation updatedfirestation : firestationdao.getAll()) {
+			if (updatedfirestation.getAddress().equals(address)) {
+
+				updatedfirestation.setStation(requestedfirestation.getStation());
+			}
+		}
 
 	}
 

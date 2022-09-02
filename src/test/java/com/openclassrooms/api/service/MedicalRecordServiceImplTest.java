@@ -1,7 +1,10 @@
 package com.openclassrooms.api.service;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,5 +117,23 @@ public class MedicalRecordServiceImplTest{
 		// TODO Auto-generated method stub
 		
 	}
+	
+
+	@Test
+    void groupedAssertions() {
+		
+		Medicalrecord medicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		
+		assertAll("Medicalrecord", () -> assertEquals("John", medicalrecord.getFirstName()),
+				() -> assertEquals("Boyd", medicalrecord.getLastName()),
+				() -> assertEquals("03/06/1984", medicalrecord.getBirthdate()),
+				() -> assertEquals(Arrays.asList("aznol:350mg","hydrapermazol:100mg"), medicalrecord.getMedications()),
+				() -> assertEquals(Arrays.asList("nillacilan"), medicalrecord.getAllergies()));
+	}
+	
+	
+	
+	
+	
 	
 }

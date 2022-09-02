@@ -119,7 +119,7 @@ public class ServiceClassImpl implements ServiceClass {
 
 		List<ChildAlertDTO> childlist = new ArrayList<ChildAlertDTO>();
 
-		List<PersonAlertDTO> personalertlist = new ArrayList<PersonAlertDTO>();
+		List<PersonAlertDTO> personalertlist = new ArrayList<PersonAlertDTO>(); 
 
 		// PersonAlertDTO personAlert = new PersonAlertDTO();
 		// List<PersonAlertDTO> personAlertlist = new ArrayList<PersonAlertDTO>();

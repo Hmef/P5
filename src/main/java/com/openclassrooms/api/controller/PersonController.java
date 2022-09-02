@@ -72,7 +72,7 @@ public class PersonController {
 	// save operation
 
 	@PostMapping(value = "/persons")
-	public ResponseEntity<Person> createPerson(@Valid @RequestBody Person person) {
+	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 
 		logger.info("Create a person --> http://localhost:9091/persons/");
 		logger.info("body : " + person);
@@ -84,7 +84,7 @@ public class PersonController {
 			return ResponseEntity.notFound().build();
 		} else {
 			logger.info("Person created Successfully");
-			return ResponseEntity.ok(createdperson);
+			return ResponseEntity.ok().body(createdperson);
 		}
 
 	}

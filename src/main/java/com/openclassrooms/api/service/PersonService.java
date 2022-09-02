@@ -12,6 +12,8 @@ public interface PersonService {
 
 	Person savePerson(Person person);
 
-	Person deletePerson(String FirstName, String lastName);
+	Person deletePerson(String firstName, String lastName);
+	
+	Person getByName(String firstName, String lastName);
 
 }

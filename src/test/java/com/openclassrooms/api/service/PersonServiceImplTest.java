@@ -1,11 +1,9 @@
 package com.openclassrooms.api.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -17,8 +15,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.api.dao.PersonDAO;
@@ -34,19 +34,10 @@ public class PersonServiceImplTest {
 	private PersonServiceImpl personservice;
 	
 	@Mock
-	private PersonDAO personDao;
-	
-	@Mock
-	private ServiceClass service;
+	private PersonDAO personDao;  // Fake Object
 	
 	@BeforeEach
 	private void setUpPerTest() {
-
-		// Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451",
-		// "841-874-6512", "jaboyd@email.com");
-
-		// Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver",
-		// "97451", "841-874-6512", "jaboyd@email.com");
 
 		// Person jonanathan = new Person("Jonanathan", "Marrack", "29 15th St",
 		// "Culver", "97451", "841-874-6513", "drk@email.com");;
@@ -73,72 +64,42 @@ public class PersonServiceImplTest {
 	@Test
 	public void updatePerson() {
 		
-		// Vérifier la couverture de cette méthode ( PersonServiceImpl.java )
-		
-		
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 		Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
-		
-		//when(john.getFirstName()).thenReturn("John");
-		//when(john.getLastName()).thenReturn("Boyd");
-		
+
+		Person johnM = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "Newjaboyd@email.com");
+
 		List<Person> personlist = new ArrayList<Person>();
 		personlist.add(john);
+		personlist.add(jacob);
 		
 		when(personDao.getAll()).thenReturn(personlist);
 		
-		List<Person> updatedpersonlistTest = new ArrayList<Person>(); 
+		personservice.savePerson(john);
+		Person createdPerson = personservice.getByName("John", "Boyd");
 		
-		String firstName = john.getFirstName();
-		String lastName = john.getLastName();
+		assertEquals("John", createdPerson.getFirstName());   
+		assertEquals("Boyd", createdPerson.getLastName());
+
 		
-		String jacobfirstName = jacob.getFirstName();
-		String jaconLastName =jacob.getLastName();
-		
-		when(firstName.equals(jacobfirstName)).thenReturn(true);
-		
-		updatedpersonlistTest.add(personservice.updatePerson(john, firstName, lastName));
-		
-		//assertNotNull(updatedpersonlistTest);
-		assertTrue(updatedpersonlistTest.contains(john));
-	
+		Person updatedperson = personservice.updatePerson(john, "John", "Boyd");
+		assertEquals("jaboyd@email.com", updatedperson.getEmail());
+
 	}
 
 	@Test
 	public void savePersonTest() {
 
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
 		
-		Person savedperson= new Person();
-		savedperson.setFirstName(john.getFirstName());
-		savedperson.setLastName(john.getLastName());
-		savedperson.setAddress(john.getAddress());
-		savedperson.setCity(john.getCity());
-		savedperson.setZip(john.getZip());
-		savedperson.setPhone(john.getPhone());
-		savedperson.setEmail(john.getEmail());
 		
-		List<Person> personlist = new ArrayList<Person>();
-		personlist.add(savedperson);
+		List<Person> savedpersonlist = new ArrayList<Person>(); 
+		savedpersonlist.add(personservice.savePerson(john));
+		int size = savedpersonlist.size();
 		
-		List<Person> savedpersonlistTest = new ArrayList<Person>(); 
-		savedpersonlistTest.add(personservice.savePerson(savedperson));
-		
-	
-		System.out.println("savedperson   " + savedperson);
-		
-		System.out.println("personlist   " + personlist.toString());
-		//assertNotNull(savedpersonlistTest);
+		assertEquals(1, size);
+		//assertEquals("John", personservice.getByFirstName("John"));
 
-		//assertTrue(savedpersonlistTest.contains(john));
-
-		//assertNotSame(expected, actual)
-		//assertNotSame(savedpersonlistTest, personlist);
-		assertEquals(savedpersonlistTest, personlist);
-		
-		
-		
 	}
 
 	@Test
@@ -146,24 +107,28 @@ public class PersonServiceImplTest {
 		
 
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
-		
-		List<Person> personlist = new ArrayList<Person>();
-		personlist.add(john);
-		personlist.add(jacob);
-		
-		List<Person> testlist = new ArrayList<Person>();
-		personservice.deletePerson(john.getFirstName(), john.getLastName());
+		//Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
 		
 		assertNull(personservice.deletePerson(john.getFirstName(), john.getLastName()));
 		
 		
-		//int size = testlist.size();
-		//assertEquals(2, size);
-		//assertNotEquals(1, size);
-		
 	}
+	
+	
+	@Test
+    public void groupedAssertions() {
+		
+		Person person = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 
+        assertAll("person", () -> assertEquals("John", person.getFirstName()),
+                () -> assertEquals("Boyd", person.getLastName()),
+                () -> assertEquals("1509 Culver St", person.getAddress()),
+                () -> assertEquals("Culver",person.getCity()),
+                () -> assertEquals("97451", person.getZip()),
+                () -> assertEquals("841-874-6512", person.getPhone()),
+                () -> assertEquals("jaboyd@email.com", person.getEmail()));
+        
+    }
 	
 	
 }

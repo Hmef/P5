@@ -17,9 +17,11 @@ public class MedicalRecordDAO implements DAO<Medicalrecord>{
 	}
 
 	@Override
-	public void save(Medicalrecord medicalrecord) {
+	public Medicalrecord save(Medicalrecord medicalrecord) {
 		
 		Data.getMedicalrecords().add(medicalrecord);
+		
+		return medicalrecord;
 		
 	}
 
@@ -31,10 +33,11 @@ public class MedicalRecordDAO implements DAO<Medicalrecord>{
 	}
 
 	@Override
-	public void update(Medicalrecord medicalrecord) {
+	public Medicalrecord update(Medicalrecord medicalrecord) {
 		
 		Data.getMedicalrecords().add(medicalrecord);
 		
+		return medicalrecord;
 	}
 
 	
