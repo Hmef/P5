@@ -10,12 +10,10 @@ public class HomeFloodDTO {
 	private List<String> medications;
 	private List<String> allergies;
 
-	
 	public HomeFloodDTO() {
 
 	}
 
-	
 	public HomeFloodDTO(String name, String phone, int age, List<String> medications, List<String> allergies) {
 		this.name = name;
 		this.phone = phone;
@@ -63,5 +61,13 @@ public class HomeFloodDTO {
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
+
+	@Override
+	public String toString() {
+		return "HomeFloodDTO [name=" + name + ", phone=" + phone + ", age=" + age + ", medications=" + medications
+				+ ", allergies=" + allergies + "]";
+	}
+	
+	
 
 }

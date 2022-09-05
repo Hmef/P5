@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +21,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.openclassrooms.api.dao.MedicalRecordDAO;
 import com.openclassrooms.api.model.Medicalrecord;
 import com.openclassrooms.api.repository.Data;
 
@@ -31,52 +33,38 @@ public class MedicalRecordServiceImplTest{
 	@InjectMocks
 	private MedicalRecordServiceImpl medicalrecordservice;  // Class under test 
 	
+	@Mock 
+	private MedicalRecordDAO  medicalrecorddao;
 	
-	@BeforeEach
+	
+	@Before
 	public void setUpPerTest() {
 		
-		//Medicalrecord johnsMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord FeliciaMedicalrecord = new Medicalrecord("Felicia", "Boyd", "01/08/1986", Arrays.asList("tetracyclaz:650mg") , Arrays.asList("xilliathal"));
 		
-		//List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
+		List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(johnMedicalrecord);
+		medicalrecordlist.add(FeliciaMedicalrecord);
 		
-		//medicalrecordlist.add(johnsMedicalrecord);
-		
-		//when(data.getMedicalrecords()).thenReturn(medicalrecordlist);
-		
+		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
 		
 	}
 	
 	@Test
 	public void getAllMedicalrecordTest() {
-		
-		
-		Medicalrecord johnsMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord FeliciaMedicalrecord = new Medicalrecord("Felicia", "Boyd", "01/08/1986", Arrays.asList("tetracyclaz:650mg") , Arrays.asList("xilliathal"));
 		
 		List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(johnMedicalrecord);
+		medicalrecordlist.add(FeliciaMedicalrecord);
 		
-		medicalrecordlist.add(johnsMedicalrecord);
+		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
 		
-		//List<Medicalrecord> expectedMedicalrecordList = medicalrecordlist;
-		
-		//List<Medicalrecord> resultMedicalrecordlist = medicalrecordservice.getAllMedicalrecord();
-		
-		List<Medicalrecord> resultMedicalrecordlist = medicalrecordservice.getAllMedicalrecord();
-		
-
-		System.out.println(" List MedicalRecords : " + resultMedicalrecordlist.toString());
-
-		//when(resultMedicalrecordlist.size()).thenReturn(23);
-		
-
-		
-		int resultSize = medicalrecordservice.getAllMedicalrecord().size();
-		
-		int expectedSize = 1;     // int expectedSize = 23;
-		
-		System.out.println("result size : " + resultSize);
-		
-		
-		assertEquals(expectedSize, resultSize);
+		System.out.println("medicalrecordservice.getAllMedicalrecord() content : "+ medicalrecordservice.getAllMedicalrecord().size());
+		assertEquals(2, medicalrecordservice.getAllMedicalrecord().size());
 	}
 	
 	
@@ -88,33 +76,38 @@ public class MedicalRecordServiceImplTest{
 	}
 
 	
-	
-	public Medicalrecord getByName(String firstName) {
-		// TODO Auto-generated method stub
+	@Test
+	public Medicalrecord getByName() {
+		
+
+		//String firstName
 		return null;
 	}
 
-	
-	public void saveTest(Medicalrecord medicalrecord) {
-		// TODO Auto-generated method stub
+	@Test
+	public void saveTest() {
+		
+		//Medicalrecord medicalrecord
 		
 	}
 
+	@Test
+	public void updateTest() {
 	
-	public void updateTest(Medicalrecord medicalrecord) {
-		// TODO Auto-generated method stub
+		// Medicalrecord medicalrecord
 		
 	}
 
-	
-	public void deleteTest(Medicalrecord medicalrecord) {
-		// TODO Auto-generated method stub
+	@Test
+	public void deleteTest() {
+		
+		
 		
 	}
 
-	
-	public void updatePTest(Medicalrecord object, String firstname, String lastname) {
-		// TODO Auto-generated method stub
+	@Test
+	public void updatePTest() {
+		// Medicalrecord object, String firstname, String lastname
 		
 	}
 	
@@ -122,13 +115,13 @@ public class MedicalRecordServiceImplTest{
 	@Test
     void groupedAssertions() {
 		
-		Medicalrecord medicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
 		
-		assertAll("Medicalrecord", () -> assertEquals("John", medicalrecord.getFirstName()),
-				() -> assertEquals("Boyd", medicalrecord.getLastName()),
-				() -> assertEquals("03/06/1984", medicalrecord.getBirthdate()),
-				() -> assertEquals(Arrays.asList("aznol:350mg","hydrapermazol:100mg"), medicalrecord.getMedications()),
-				() -> assertEquals(Arrays.asList("nillacilan"), medicalrecord.getAllergies()));
+		assertAll("johnMedicalrecord", () -> assertEquals("John", johnMedicalrecord.getFirstName()),
+				() -> assertEquals("Boyd", johnMedicalrecord.getLastName()),
+				() -> assertEquals("03/06/1984", johnMedicalrecord.getBirthdate()),
+				() -> assertEquals(Arrays.asList("aznol:350mg","hydrapermazol:100mg"), johnMedicalrecord.getMedications()),
+				() -> assertEquals(Arrays.asList("nillacilan"), johnMedicalrecord.getAllergies()));
 	}
 	
 	

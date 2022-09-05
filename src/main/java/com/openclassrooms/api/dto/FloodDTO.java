@@ -33,9 +33,10 @@ public class FloodDTO {
 	public void setHomeFloodDto(List<HomeFloodDTO> homeFloodDto) {
 		this.homeFloodDto = homeFloodDto;
 	}
-	
-	
 
-	
+	@Override
+	public String toString() {
+		return "FloodDTO [address=" + address + ", homeFloodDto=" + homeFloodDto + "]";
+	}
 	
 }

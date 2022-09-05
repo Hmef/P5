@@ -17,6 +17,7 @@ public class MedicalRecordServiceImpl implements MedicalRecordService {
 	@Autowired
 	private MedicalRecordDAO medicalrecordDao;
 	
+	
 	public List<Medicalrecord> getAllMedicalrecord() {
 
 		return medicalrecordDao.getAll();

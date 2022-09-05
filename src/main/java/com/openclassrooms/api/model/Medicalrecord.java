@@ -2,6 +2,10 @@ package com.openclassrooms.api.model;
 
 import java.util.List;
 
+import javax.validation.constraints.Null;
+
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

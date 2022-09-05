@@ -7,8 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FireDTO {
 
-	private String firestationNumber;  
-	//@JsonProperty(value = "persons")  
+	private String firestationNumber;   
 	private List<PersonMedicalRecordFireDTO> persons = new ArrayList<PersonMedicalRecordFireDTO>();
 	
 	public FireDTO() {
@@ -35,5 +34,12 @@ public class FireDTO {
 	public void setPersonMedicalRecordFireDTO(List<PersonMedicalRecordFireDTO> person) {
 		this.persons = person;
 	}
+
+	@Override
+	public String toString() {
+		return "FireDTO [firestationNumber=" + firestationNumber + ", persons=" + persons + "]";
+	}
+	
+	
 
 }

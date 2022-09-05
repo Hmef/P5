@@ -46,8 +46,6 @@ public class FirestationServiceImpl implements FirestationService {
 	}
 
 	public Firestation save(Firestation requestedFirestation) {
-		
-		/*
 
 		Firestation createdfirestation = new Firestation();
 
@@ -57,34 +55,37 @@ public class FirestationServiceImpl implements FirestationService {
 		firestationdao.save(createdfirestation);
 
 		return createdfirestation;
-		*/
-		return null;
 
 	}
 
-	public void delete(String address, String station) {
+	public Firestation delete(String address, String station) {
 
-		/*
 		for (Firestation firestation : firestationdao.getAll()) {
 			if (firestation.getAddress().equals(address) && firestation.getStation().equals(station)) {
 
 				firestationdao.delete(firestation);
+				return null;
 			}
 		}
-		*/
+
+		return null;  // Emplacement ???
+		
 	}
 
-	
 	@Override
-	public void update(Firestation requestedfirestation, String address) {
+	public Firestation update(Firestation requestedfirestation, String address) {
 
 		for (Firestation updatedfirestation : firestationdao.getAll()) {
 			if (updatedfirestation.getAddress().equals(address)) {
 
 				updatedfirestation.setStation(requestedfirestation.getStation());
+				
+				return updatedfirestation;
 			}
 		}
 
+		return null;
 	}
 
+	
 }

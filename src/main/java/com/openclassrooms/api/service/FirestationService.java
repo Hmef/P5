@@ -12,8 +12,8 @@ public interface FirestationService {
 	
 	Firestation save(Firestation firestation);
 	
-	void delete(String address, String station);
+	Firestation delete(String address, String station);
 	
-	void update(Firestation firestation, String address);
+	Firestation update(Firestation firestation, String address);
 
 }
