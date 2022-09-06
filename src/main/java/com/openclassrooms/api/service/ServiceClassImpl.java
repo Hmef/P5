@@ -22,7 +22,6 @@ import com.openclassrooms.api.dto.ChildAlertDTO;
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
 import com.openclassrooms.api.dto.FirestationDTO;
-import com.openclassrooms.api.dto.FloodDTO;
 import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.dto.PersonAlertDTO;
 import com.openclassrooms.api.dto.PersonCountDTO;
@@ -160,18 +159,11 @@ public class ServiceClassImpl implements ServiceClass {
 							child.setAge(age);
 
 							child.setPersonalert(personalertlist);
-
 							childlist.add(child);
-
-							// System.out.println("child.toString() : " + child.toString());
 						}
-
 					}
-
 				}
-
 			}
-
 		}
 
 		return childlist;
@@ -179,12 +171,9 @@ public class ServiceClassImpl implements ServiceClass {
 
 	// Flood
 	@Override
-	public List<FloodDTO> GetListHomeByCasernnn(String firestationNum) throws ParseException {
+	public Map<String, List<HomeFloodDTO>> GetListHomeByCasern(String firestationNum) throws ParseException {
 
-		FloodDTO flood = new FloodDTO();
 		List<HomeFloodDTO> homeFloodlist = new ArrayList<HomeFloodDTO>();
-
-		List<FloodDTO> floodlist = new ArrayList<FloodDTO>();
 		List<String> addresslist = new ArrayList<String>();
 
 		for (Firestation firestation : firestationdao.getAll()) {
@@ -199,47 +188,42 @@ public class ServiceClassImpl implements ServiceClass {
 				if (person.getAddress().equals(address)) {
 
 					HomeFloodDTO homeFlood = new HomeFloodDTO();
-					// System.out.println(" person Address :--------> " + person.getAddress());
 
 					homeFlood.setName(person.getFirstName() + " " + person.getLastName());
+					homeFlood.setPhone(person.getPhone());
 					homeFlood.setAddress(person.getAddress());
+					
+					for(Medicalrecord medicalrecord : medicalrecorddao.getAll()) {
+						if(medicalrecord.getFirstName().equals(person.getFirstName())) {
+							
+							int age = calculteAge(medicalrecord.getBirthdate());
+							homeFlood.setAge(age);
+							homeFlood.setAllergies(medicalrecord.getAllergies());
+							homeFlood.setMedications(medicalrecord.getMedications());
+						}
+					}
 
-					// System.out.println(" person Name : " + homeFlood.getName());
-
-					// homeFloodDto.setPhone(person.getPhone());
-
-					homeFloodlist.add(homeFlood); // Persons lives in this Address
-					// System.out.println(" homeFloodlist :--------> " + homeFloodlist.toString());
+					homeFloodlist.add(homeFlood); 
 
 				} // End if
 			} // for person
 		} // for address
 
-		Map<String, List<HomeFloodDTO>> personByAddress = new HashMap<>();
+		/*
+		 * Map Solution
+		 */
+
+		Map<String, List<HomeFloodDTO>> personByAddressMap = new HashMap<>();
 
 		for (HomeFloodDTO homeFlood : homeFloodlist) {
-			if (!personByAddress.containsKey(homeFlood.getAddress())) {
+			if (!personByAddressMap.containsKey(homeFlood.getAddress())) {
 
-				personByAddress.put(homeFlood.getAddress(), new ArrayList<>());
+				personByAddressMap.put(homeFlood.getAddress(), new ArrayList<>());
 			}
-			personByAddress.get(homeFlood.getAddress()).add(homeFlood);
+			personByAddressMap.get(homeFlood.getAddress()).add(homeFlood);
 		}
-
-		System.out.println("Map            --> " + personByAddress);
-		
-		for(String address : personByAddress.keySet()) {
-			
-			flood.setAddress(address);
-			List<HomeFloodDTO> homeFloodValueMap = personByAddress.get(address);
-			flood.setHomeFloodDto(homeFloodValueMap);
-			floodlist.add(flood);
-		}
-
-		//flood.setAddress(key);
-		//flood.setHomeFloodDto(homeFloodlist);  // value of the map 
-
-		
-		return floodlist;
+	
+		return personByAddressMap;
 	}
 
 	@Override
@@ -283,10 +267,8 @@ public class ServiceClassImpl implements ServiceClass {
 	}
 
 	@Override
-	public FireDTO getListPersonByAddressStation(String address) throws ParseException { // Exceptions add
-																							// try/catch in
-																							// calculateAge()
-
+	public FireDTO getListPersonByAddressStation(String address) throws ParseException {
+		
 		logger.info(" Fire EndPoint ");
 		logger.info(
 				" Get the list of the persons live in this address " + address + "and covered by this number station ");
@@ -320,14 +302,11 @@ public class ServiceClassImpl implements ServiceClass {
 
 							fireDto.setFirestationNumber(firestation.getStation());
 						}
-
 					}
-
 				}
 
 				pmrfDtoList.add(pmrfDto);
 			}
-
 		} // End For
 
 		fireDto.setPersonMedicalRecordFireDTO(pmrfDtoList);
@@ -346,11 +325,7 @@ public class ServiceClassImpl implements ServiceClass {
 			if (firestation.getAddress().equals(address)) {
 
 				firestationDto.setStation(firestation.getStation());
-
-				// firestationDtolist.add(firestationDto);
-
 			}
-
 		}
 
 		for (Person person : Data.getPersons()) {
@@ -454,7 +429,10 @@ public class ServiceClassImpl implements ServiceClass {
 
 		return null;
 	}
+	
+	
 
+	/*
 	@Override
 	public List<Person> getAddressPerson(String address) {
 
@@ -471,6 +449,7 @@ public class ServiceClassImpl implements ServiceClass {
 		return null;
 	}
 
+*/
 	@Override
 	public int calculteAge(String birthdate) throws ParseException {
 

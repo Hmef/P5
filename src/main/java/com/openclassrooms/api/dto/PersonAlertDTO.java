@@ -40,11 +40,6 @@ public class PersonAlertDTO {
 		this.age = age;
 	}
 
-	@Override
-	public String toString() {
-		return "PersonAlertDTO [firstname=" + firstname + ", lastname=" + lastname + ", age=" + age + "]";
-	}
-	
 	
 	
 	

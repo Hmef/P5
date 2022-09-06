@@ -2,6 +2,7 @@ package com.openclassrooms.api.controller;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,11 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
 import com.openclassrooms.api.dto.FirestationDTO;
-import com.openclassrooms.api.dto.FloodDTO;
+import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.model.Firestation;
 import com.openclassrooms.api.service.FirestationService;
 import com.openclassrooms.api.service.ServiceClass;
@@ -21,7 +23,7 @@ import com.openclassrooms.api.service.ServiceClass;
 @RestController
 public class FirestationController {
 	
-	private static Logger logger = org.slf4j.LoggerFactory.getLogger("");
+	private static Logger logger = LoggerFactory.getLogger("");
 
 	@Autowired
 	private FirestationService firestationservice;
@@ -41,7 +43,7 @@ public class FirestationController {
 	@GetMapping(value = "/firestation")
 	public Firestation getFirestation(String address) {
 		
-		return service.getFirestation(address); 
+		return service.getFirestation(address);   // in firestation service 
 	}
 	
 	
@@ -57,11 +59,11 @@ public class FirestationController {
 
 	
 	@GetMapping(value="/flood/stations")
-	public List<FloodDTO> getListHomeByCasern(String stationNumberList) throws ParseException{ 
+	public Map<String, List<HomeFloodDTO>> getListHomeByCasern(String stationNumber) throws ParseException{ 
 		
 		logger.info("Get http://localhost:8080/flood/stations?stations=<a list of station_numbers>");
 		
-			return service.GetListHomeByCasernnn(stationNumberList);
+			return service.GetListHomeByCasern(stationNumber);
 
 	}
 	

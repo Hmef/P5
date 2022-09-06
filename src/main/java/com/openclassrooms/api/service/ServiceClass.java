@@ -2,12 +2,13 @@ package com.openclassrooms.api.service;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 import com.openclassrooms.api.dto.ChildAlertDTO;
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
 import com.openclassrooms.api.dto.FirestationDTO;
-import com.openclassrooms.api.dto.FloodDTO;
+import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.dto.PersonMedicalRecordDTO;
 import com.openclassrooms.api.model.Firestation;
 import com.openclassrooms.api.model.Person;
@@ -23,9 +24,9 @@ public interface ServiceClass {
 	 
 	 List<ChildAlertDTO> getChildByAddress(String address) throws ParseException;
 	 
-	 List<FloodDTO> GetListHomeByCasernnn(String firestationNum) throws ParseException;
+	 Map<String, List<HomeFloodDTO>> GetListHomeByCasern(String firestationNum) throws ParseException;
 	 
-	 Firestation getFirestationByStation(String station);
+	 Firestation getFirestationByStation(String station); ///
 	 
 	 List<String> getPhoneListByCasern(String numberFirestation);
 	 
@@ -35,9 +36,7 @@ public interface ServiceClass {
 	 
 	 CountDTO getCountPersonBystation(String stationNumber) throws ParseException;
 	 
-	 Firestation getFirestation(String address);
-	 
-	 List<Person> getAddressPerson(String address);
+	 Firestation getFirestation(String address);  ///
 	 
 	 int calculteAge(String birthdate) throws ParseException;
 	 

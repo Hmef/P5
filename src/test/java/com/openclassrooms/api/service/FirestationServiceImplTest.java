@@ -50,8 +50,8 @@ public class FirestationServiceImplTest {
 	}
 
 	@Test
-	public void getFirestationTest(String adress) {
-		// TODO Auto-generated method stub
+	public void getFirestationTest() {
+		// String adress
 
 	}
 

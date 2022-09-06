@@ -10,7 +10,9 @@ import static org.mockito.Mockito.when;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.Test; /// 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +31,7 @@ import com.openclassrooms.api.dao.PersonDAO;
 import com.openclassrooms.api.dto.ChildAlertDTO;
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
+import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.dto.PersonAlertDTO;
 import com.openclassrooms.api.dto.PersonCountDTO;
 import com.openclassrooms.api.dto.PersonMedicalRecordDTO;
@@ -49,15 +52,6 @@ public class ServiceClassImplTest {
 
 	@Mock
 	private ObjectMapper objectmapper;
-
-	@Mock
-	private PersonServiceImpl personservice;
-	
-	@Mock
-	private MedicalRecordServiceImpl medicalrecordservice;
-	
-	@Mock
-	private FirestationServiceImpl firestationservice;
 	
 	@Mock
 	private PersonDAO persondao;
@@ -171,14 +165,15 @@ public class ServiceClassImplTest {
 		memberAlertList.add(memberAlert);
 		memberAlertList.add(secondMemberAlert);
 		
-		//ChildAlertDTO childAlert = new ChildAlertDTO("Zach", "Zemicks", 5, memberAlertList);
-		
+		ChildAlertDTO childAlert = new ChildAlertDTO("Zach", "Zemicks", 5, memberAlertList);
+		/*
 		ChildAlertDTO childAlert = new ChildAlertDTO();
 		childAlert.setFirstname(ZachChild.getFirstName());
 		childAlert.setLastname(ZachChild.getLastName());
 		childAlert.setAge(5);
 		childAlert.setPersonalert(memberAlertList);
 		
+		*/
 		List<ChildAlertDTO> expectedChildAlertList = new ArrayList<ChildAlertDTO>();
 		expectedChildAlertList.add(childAlert);
 		
@@ -192,17 +187,6 @@ public class ServiceClassImplTest {
 		assertSame(expectedChildAlertList.get(0).getFirstname(), actualChildAlertList.get(0).getFirstname());
 		
 	}
-
-
-
-	@Test
-	public void GetListHomeByCasern()  {
-		
-		// String firestationNum
-		//List<FloodDTO>
-		
-	}
-
 
 	@Test
 	public void getFirestationByStation() {
@@ -386,6 +370,82 @@ public class ServiceClassImplTest {
 	}
 
 
+	
+	// Flood EndPoint 
+	@Test
+	public void GetListHomeByCasern_ShouldReturnMapOfPersonGroupedByAddress() throws ParseException {
+		
+		Firestation firestation = new Firestation("892 Downing Ct", "2");
+		Firestation firestationn = new Firestation("951 LoneTree Rd", "2");
+		
+		List<Firestation> firestationlist = new ArrayList<Firestation>();
+		firestationlist.add(firestation);
+		firestationlist.add(firestationn);
+		
+		when(firestationdao.getAll()).thenReturn(firestationlist);
+		
+		Person Sophia = new Person("Sophia", "Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7878", "soph@email.com");
+		Person Warren = new Person("Warren", "Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7512", "ward@email.com");
+		Person Eric = new Person("Eric", "Cadigan", "951 LoneTree Rd", "Culver", "97451", "841-874-7458", "gramps@email.com");
+	
+		Person ZachChild = new Person("Zach", "Zemicks",  "892 Downing Ct", "Culver", "97451", "841-874-7512", "zarc@email.com");
+	
+		Medicalrecord SophiaMedicalrecord = new Medicalrecord("Sophia", "Zemicks", "03/06/1988", Arrays.asList("aznol:60mg","hydrapermazol:900mg","pharmacol:5000mg","terazine:500mg") , Arrays.asList("peanut","shellfish","aznol"));
+		Medicalrecord WarrenMedicalrecord = new Medicalrecord("Warren", "Zemicks", "03/06/1985", Arrays.asList("") , Arrays.asList(""));
+		Medicalrecord EricMedicalrecord = new Medicalrecord("Eric", "Cadigan", "08/06/1945", Arrays.asList("") , Arrays.asList(""));
+		
+		Medicalrecord ZachChildMedicalrecord = new Medicalrecord("Zach", "Zemicks", "03/06/2017", Arrays.asList("tradoxidine:400mg"), Arrays.asList("")); 
+		
+		ArrayList<Person> personlist = new ArrayList<Person>();
+		personlist.add(Sophia);
+		personlist.add(Warren);
+		personlist.add(Eric);
+		personlist.add(ZachChild);
+		
+		ArrayList<Medicalrecord> medicalrecordlist = new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(SophiaMedicalrecord);
+		medicalrecordlist.add(WarrenMedicalrecord);
+		medicalrecordlist.add(EricMedicalrecord);
+		medicalrecordlist.add(ZachChildMedicalrecord);
+
+		when(persondao.getAll()).thenReturn(personlist);
+		when(medicalrecordDao.getAll()).thenReturn(medicalrecordlist);
+		
+		String LoneTreeAddress = "951 LoneTree Rd";
+		
+		HomeFloodDTO homeLoneTreeAddressFlood = new HomeFloodDTO("Eric" +" " + "Cadigan", "841-874-7458", "951 LoneTree Rd", 77,  Arrays.asList("") , Arrays.asList(""));
+		List<HomeFloodDTO> homeLoneTreeaddressFloodlist = new ArrayList<HomeFloodDTO>();
+		homeLoneTreeaddressFloodlist.add(homeLoneTreeAddressFlood);
+		
+		String DowningAddress = "892 Downing Ct";
+		
+		HomeFloodDTO sophiaHomeDowningAddressFlood = new HomeFloodDTO("Sophia" + " " + "Zemicks", "841-874-7878", "892 Downing Ct", 34,  Arrays.asList("aznol:60mg","hydrapermazol:900mg","pharmacol:5000mg","terazine:500mg") , Arrays.asList("peanut","shellfish","aznol"));
+		HomeFloodDTO warrenHomeDowningAddressFlood = new HomeFloodDTO("Warren" + " " + "Zemicks", "841-874-7512", "892 Downing Ct", 37, Arrays.asList("") , Arrays.asList(""));
+		HomeFloodDTO zackHomeDowningAddressFlood = new HomeFloodDTO("Zach" + " " +"Zemicks", "841-874-7512", "892 Downing Ct", 5, Arrays.asList("") , Arrays.asList(""));
+		
+		List<HomeFloodDTO> homeDowningAddressFloodlist = new ArrayList<HomeFloodDTO>();
+		homeDowningAddressFloodlist.add(sophiaHomeDowningAddressFlood);
+		homeDowningAddressFloodlist.add(warrenHomeDowningAddressFlood);
+		homeDowningAddressFloodlist.add(zackHomeDowningAddressFlood);
+		
+		Map<String, List<HomeFloodDTO>> personByAddressMap = new HashMap<String, List<HomeFloodDTO>>();
+		personByAddressMap.put(LoneTreeAddress, homeLoneTreeaddressFloodlist);
+		personByAddressMap.put(DowningAddress, homeDowningAddressFloodlist);
+		
+		String firestationNum = "2";
+		
+		Map<String, List<HomeFloodDTO>> actualPersonByAddressMap = service.GetListHomeByCasern(firestationNum);
+		
+		//List<String> actualAddressList = (List<String>) actualPersonByAddressMap.keySet();   // ????????
+		List<String> expectedAddressList = Arrays.asList("951 LoneTree Rd","892 Downing Ct");
+		
+		//assertEquals(expectedAddressList, actualAddressList);
+		assertFalse(actualPersonByAddressMap.isEmpty());
+		assertTrue(actualPersonByAddressMap.containsKey(LoneTreeAddress));
+		
+	
+	}
+	
 	
 	
 }

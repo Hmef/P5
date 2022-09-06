@@ -43,12 +43,6 @@ public class PersonController {
 		return personservice.getAll();
 	}
 
-	/*
-	@GetMapping(value = "/persons/name/")
-	public Person getPersonByName(String firstname, String lastname) {
-
-		return service.getByName(firstname, lastname);
-	}*/
 
 	@GetMapping(value = "/communityEmail")
 	public List<String> getEmail(String city) {
@@ -70,7 +64,6 @@ public class PersonController {
 	}
 
 	// save operation
-
 	@PostMapping(value = "/persons")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 

@@ -62,13 +62,6 @@ public class PersonMedicalRecordFireDTO {
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
-
-	@Override
-	public String toString() {
-		return "PersonMedicalRecordFireDTO [name=" + name + ", phone=" + phone + ", age=" + age + ", medications="
-				+ medications + ", allergies=" + allergies + "]";
-	}
-	
 	
 
 }

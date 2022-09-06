@@ -60,11 +60,5 @@ public class PersonCountDTO {
 		this.age = age;
 	}
 
-	@Override
-	public String toString() {
-		return "PersonCountDTO [firstname=" + firstname + ", lastname=" + lastname + ", phone=" + phone + ", address="
-				+ address + ", age=" + age + "]";
-	}
-
 	
 }

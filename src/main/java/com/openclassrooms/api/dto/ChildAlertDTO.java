@@ -57,11 +57,7 @@ public class ChildAlertDTO {
 		this.personalert = personalert;
 	}
 
-	@Override
-	public String toString() {
-		return "ChildAlertDTO [firstname=" + firstname + ", lastname=" + lastname + ", age=" + age + ", personalert="
-				+ personalert + "]";
-	}  
+	  
 	
 	
 	

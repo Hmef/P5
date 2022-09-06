@@ -35,11 +35,6 @@ public class FireDTO {
 		this.persons = person;
 	}
 
-	@Override
-	public String toString() {
-		return "FireDTO [firestationNumber=" + firestationNumber + ", persons=" + persons + "]";
-	}
-	
 	
 
 }

@@ -6,7 +6,7 @@ public class HomeFloodDTO {
 
 	private String name;
 	private String phone;
-	private String address; // ??
+	private String address;  
 	private int age;
 	private List<String> medications;
 	private List<String> allergies;
@@ -79,5 +79,6 @@ public class HomeFloodDTO {
 				+ ", medications=" + medications + ", allergies=" + allergies + "]";
 	}
 
+	
 	
 }
