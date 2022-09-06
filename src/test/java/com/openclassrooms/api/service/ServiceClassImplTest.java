@@ -27,8 +27,10 @@ import com.openclassrooms.api.dao.FirestationDAO;
 import com.openclassrooms.api.dao.MedicalRecordDAO;
 import com.openclassrooms.api.dao.PersonDAO;
 import com.openclassrooms.api.dto.ChildAlertDTO;
+import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
 import com.openclassrooms.api.dto.PersonAlertDTO;
+import com.openclassrooms.api.dto.PersonCountDTO;
 import com.openclassrooms.api.dto.PersonMedicalRecordDTO;
 import com.openclassrooms.api.dto.PersonMedicalRecordFireDTO;
 import com.openclassrooms.api.model.Firestation;
@@ -306,11 +308,81 @@ public class ServiceClassImplTest {
 
 
 	@Test
-	public void getCountPersonBystation() {
+	public void getCountPersonBystation_ShouldReturnCountOfAdultAndChildNumberAndListOfPersonByStationNumber() throws ParseException {
 		
-		//List<CountDTO>
-		//String stationNumber
+		Firestation firestation = new Firestation("892 Downing Ct", "2");
+		Firestation firestationn = new Firestation("951 LoneTree Rd", "2");
 		
+		List<Firestation> firestationlist = new ArrayList<Firestation>();
+		firestationlist.add(firestation);
+		firestationlist.add(firestationn);
+		
+		when(firestationdao.getAll()).thenReturn(firestationlist);
+		
+		Person Sophia = new Person("Sophia", "Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7878", "soph@email.com");
+		Person Warren = new Person("Warren", "Zemicks", "892 Downing Ct", "Culver", "97451", "841-874-7512", "ward@email.com");
+		Person Eric = new Person("Eric", "Cadigan", "951 LoneTree Rd", "Culver", "97451", "841-874-7458", "gramps@email.com");
+	
+		Person ZachChild = new Person("Zach", "Zemicks",  "892 Downing Ct", "Culver", "97451", "841-874-7512", "zarc@email.com");
+	
+		Medicalrecord SophiaMedicalrecord = new Medicalrecord("Sophia", "Zemicks", "03/06/1988", Arrays.asList("aznol:60mg","hydrapermazol:900mg","pharmacol:5000mg","terazine:500mg") , Arrays.asList("peanut","shellfish","aznol"));
+		Medicalrecord WarrenMedicalrecord = new Medicalrecord("Warren", "Zemicks", "03/06/1985", Arrays.asList("") , Arrays.asList(""));
+		Medicalrecord EricMedicalrecord = new Medicalrecord("Eric", "Cadigan", "08/06/1945", Arrays.asList("") , Arrays.asList(""));
+		
+		Medicalrecord ZachChildMedicalrecord = new Medicalrecord("Zach", "Zemicks", "03/06/2017", Arrays.asList("tradoxidine:400mg"), Arrays.asList("")); 
+		
+		ArrayList<Person> personlist = new ArrayList<Person>();
+		personlist.add(Sophia);
+		personlist.add(Warren);
+		personlist.add(Eric);
+		personlist.add(ZachChild);
+		
+		ArrayList<Medicalrecord> medicalrecordlist = new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(SophiaMedicalrecord);
+		medicalrecordlist.add(WarrenMedicalrecord);
+		medicalrecordlist.add(EricMedicalrecord);
+		medicalrecordlist.add(ZachChildMedicalrecord);
+
+		when(persondao.getAll()).thenReturn(personlist);
+		when(medicalrecordDao.getAll()).thenReturn(medicalrecordlist);
+		
+		PersonCountDTO zachcountchild = new PersonCountDTO("Zach", "Zemicks", "841-874-7512", "892 Downing Ct", 5);
+		PersonCountDTO sophiacount = new PersonCountDTO("Sophia", "Zemicks", "841-874-7878", "892 Downing Ct", 34);
+		PersonCountDTO warrencount = new PersonCountDTO("Warren", "Zemicks", "841-874-7512", "892 Downing Ct", 37);
+		PersonCountDTO ericcount = new PersonCountDTO("Eric", "Cadigan", "841-874-7458", "951 LoneTree Rd", 77);
+		
+		List<PersonCountDTO> childCountlist = new ArrayList<PersonCountDTO>();
+		childCountlist.add(zachcountchild);
+		
+		List<PersonCountDTO> personCountlist = new ArrayList<PersonCountDTO>();
+		personCountlist.add(sophiacount);
+		personCountlist.add(warrencount);
+		personCountlist.add(ericcount);
+
+		int sizechild = childCountlist.size();
+		int sizeperson = personCountlist.size();
+		
+		List<PersonCountDTO> personchildCountlist = new ArrayList<PersonCountDTO>();
+		personchildCountlist.addAll(childCountlist);
+		personchildCountlist.addAll(personCountlist);
+
+		CountDTO expectedCount = new CountDTO(sizechild, sizeperson, personchildCountlist);
+		
+		String stationNumber =  "2";
+		
+		CountDTO actualCount = service.getCountPersonBystation(stationNumber);
+		
+		int actualPersonCount = actualCount.getSizeperson();  // 3 adults 
+		int actualChildCount = actualCount.getSizechild(); // 1 child
+		
+		int actualPersonAge = actualCount.getPersonList().get(3).getAge();  // 77 ans 
+		int actualChildAge = actualCount.getPersonList().get(0).getAge();  // 5 ans 
+	
+		assertSame(77, actualPersonAge);
+		assertEquals(1 , actualChildCount);
+		assertEquals(3, actualPersonCount);
+		assertTrue(actualPersonAge > 18);
+		assertTrue(actualChildAge < 18);
 	}
 
 

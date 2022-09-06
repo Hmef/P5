@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -181,55 +183,62 @@ public class ServiceClassImpl implements ServiceClass {
 
 		FloodDTO flood = new FloodDTO();
 		List<HomeFloodDTO> homeFloodlist = new ArrayList<HomeFloodDTO>();
-		List<Person> addressPersonlist = new ArrayList<Person>();
 
 		List<FloodDTO> floodlist = new ArrayList<FloodDTO>();
 		List<String> addresslist = new ArrayList<String>();
 
-		for (Firestation firestation : firestationdao.getAll()) { 
+		for (Firestation firestation : firestationdao.getAll()) {
 			if (firestation.getStation().equals(firestationNum)) {
 
 				addresslist.add(firestation.getAddress());
 			}
-
 		}
+		for (String address : addresslist) {
+			for (Person person : persondao.getAll()) {
 
-		System.out.println(" addresslist    --> " + addresslist.toString());
-
-		for (Person person : persondao.getAll()) {
-
-			// address
-			for (String address : addresslist) {
 				if (person.getAddress().equals(address)) {
 
 					HomeFloodDTO homeFlood = new HomeFloodDTO();
-					System.out.println(" person Address :--------> " + person.getAddress());
+					// System.out.println(" person Address :--------> " + person.getAddress());
 
 					homeFlood.setName(person.getFirstName() + " " + person.getLastName());
+					homeFlood.setAddress(person.getAddress());
 
-					System.out.println(" person Name : " + homeFlood.getName());
+					// System.out.println(" person Name : " + homeFlood.getName());
 
 					// homeFloodDto.setPhone(person.getPhone());
 
-					homeFloodlist.add(homeFlood); // Persons By Address
-					System.out.println(" homeFloodlist :--------> " + homeFloodlist.toString());
+					homeFloodlist.add(homeFlood); // Persons lives in this Address
+					// System.out.println(" homeFloodlist :--------> " + homeFloodlist.toString());
 
-					flood.setAddress(address);
-					flood.setHomeFloodDto(homeFloodlist);
-					floodlist.add(flood);
+				} // End if
+			} // for person
+		} // for address
 
-				} // for address
+		Map<String, List<HomeFloodDTO>> personByAddress = new HashMap<>();
 
-				// Get Address for this station
+		for (HomeFloodDTO homeFlood : homeFloodlist) {
+			if (!personByAddress.containsKey(homeFlood.getAddress())) {
 
-			} // End if
-
+				personByAddress.put(homeFlood.getAddress(), new ArrayList<>());
+			}
+			personByAddress.get(homeFlood.getAddress()).add(homeFlood);
 		}
 
-		System.out.println(" flood List :--------> " + floodlist.toString());
+		System.out.println("Map            --> " + personByAddress);
+		
+		for(String address : personByAddress.keySet()) {
+			
+			flood.setAddress(address);
+			List<HomeFloodDTO> homeFloodValueMap = personByAddress.get(address);
+			flood.setHomeFloodDto(homeFloodValueMap);
+			floodlist.add(flood);
+		}
 
-		System.out.println(" flood  :--------> " + flood);
+		//flood.setAddress(key);
+		//flood.setHomeFloodDto(homeFloodlist);  // value of the map 
 
+		
 		return floodlist;
 	}
 
@@ -279,7 +288,8 @@ public class ServiceClassImpl implements ServiceClass {
 																							// calculateAge()
 
 		logger.info(" Fire EndPoint ");
-		logger.info(" Get the list of the persons live in this address " + address + "and covered by this number station ");
+		logger.info(
+				" Get the list of the persons live in this address " + address + "and covered by this number station ");
 
 		FireDTO fireDto = new FireDTO();
 
@@ -360,12 +370,12 @@ public class ServiceClassImpl implements ServiceClass {
 	}
 
 	@Override
-	public List<CountDTO> getCountPersonBystation(String stationNumber) throws ParseException {
+	public CountDTO getCountPersonBystation(String stationNumber) throws ParseException {
 
 		logger.info(" http://localhost:8080/firestation?stationNumber=<station_number> ");
 		logger.info("Get the COUNT of persons by station : " + stationNumber);
 
-		List<PersonCountDTO> personcountlist = new ArrayList<PersonCountDTO>();
+		List<PersonCountDTO> personlist = new ArrayList<PersonCountDTO>();
 		List<PersonCountDTO> personcountlistAll = new ArrayList<PersonCountDTO>();
 		List<String> addresslist = new ArrayList<String>();
 		List<Person> addressPersonlistt = new ArrayList<Person>();
@@ -374,9 +384,8 @@ public class ServiceClassImpl implements ServiceClass {
 		List<PersonCountDTO> childlist = new ArrayList<PersonCountDTO>();
 
 		CountDTO countDto = new CountDTO();
-		List<CountDTO> personchildcountList = new ArrayList<CountDTO>();
 
-		for (Firestation firestation : Data.getFirestations()) {
+		for (Firestation firestation : firestationdao.getAll()) {
 			if (firestation.getStation().equals(stationNumber)) {
 				String address = firestation.getAddress();
 				addresslist.add(address);
@@ -384,7 +393,7 @@ public class ServiceClassImpl implements ServiceClass {
 		}
 		for (String address : addresslist) {
 
-			for (Person person : Data.getPersons()) {
+			for (Person person : persondao.getAll()) {
 				if (person.getAddress().equals(address)) {
 
 					addressPersonlistt.add(person);
@@ -401,7 +410,7 @@ public class ServiceClassImpl implements ServiceClass {
 			personcount.setPhone(person.getPhone());
 			personcount.setAddress(person.getAddress());
 
-			for (Medicalrecord medicalrecord : Data.getMedicalrecords()) {
+			for (Medicalrecord medicalrecord : medicalrecorddao.getAll()) {
 				if (person.getFirstName().equals(medicalrecord.getFirstName())
 						&& person.getLastName().equals(medicalrecord.getLastName())) {
 
@@ -412,30 +421,27 @@ public class ServiceClassImpl implements ServiceClass {
 			if (personcount.getAge() <= 18) {
 
 				childlist.add(personcount);
-
-				// countDto.setSize(childlist.size());
 			}
 
 			if (personcount.getAge() > 18) {
 
-				personcountlist.add(personcount);
-
-				// countDto.setSize(personcountlist.size());
+				personlist.add(personcount);
 			}
 		}
 
-		personcountlistAll.addAll(childlist); //// Solution
-		personcountlistAll.addAll(personcountlist);
+		personcountlistAll.addAll(childlist); 
+		personcountlistAll.addAll(personlist);
 
 		countDto.setSizechild(childlist.size());
-		countDto.setSizeperson(personcountlist.size());
-		countDto.setPerson(personcountlistAll);
+		countDto.setSizeperson(personlist.size());
+		countDto.setPersonList(personcountlistAll);
 
-		personchildcountList.add(countDto);
 
-		return personchildcountList; // Solution
+		return countDto;
 	}
 
+	
+	
 	public Firestation getFirestation(String address) {
 
 		for (Firestation firestation : Data.getFirestations()) {

@@ -81,7 +81,7 @@ public class FirestationController {
 	}
 	
 	@GetMapping(value="/firestationCount")
-	public List<CountDTO> getCountPersonBystation(String stationNumber) throws ParseException{
+	public CountDTO getCountPersonBystation(String stationNumber) throws ParseException{
 		
 		return service.getCountPersonBystation(stationNumber);
 	}

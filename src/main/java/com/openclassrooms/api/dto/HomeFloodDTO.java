@@ -6,6 +6,7 @@ public class HomeFloodDTO {
 
 	private String name;
 	private String phone;
+	private String address; // ??
 	private int age;
 	private List<String> medications;
 	private List<String> allergies;
@@ -14,9 +15,11 @@ public class HomeFloodDTO {
 
 	}
 
-	public HomeFloodDTO(String name, String phone, int age, List<String> medications, List<String> allergies) {
+	public HomeFloodDTO(String name, String phone, String address, int age, List<String> medications,
+			List<String> allergies) {
 		this.name = name;
 		this.phone = phone;
+		this.address = address;
 		this.age = age;
 		this.medications = medications;
 		this.allergies = allergies;
@@ -36,6 +39,14 @@ public class HomeFloodDTO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public int getAge() {
@@ -64,10 +75,9 @@ public class HomeFloodDTO {
 
 	@Override
 	public String toString() {
-		return "HomeFloodDTO [name=" + name + ", phone=" + phone + ", age=" + age + ", medications=" + medications
-				+ ", allergies=" + allergies + "]";
+		return "HomeFloodDTO [name=" + name + ", phone=" + phone + ", address=" + address + ", age=" + age
+				+ ", medications=" + medications + ", allergies=" + allergies + "]";
 	}
-	
-	
 
+	
 }

@@ -33,7 +33,7 @@ public interface ServiceClass {
 	 
 	 List<FirestationDTO> getPersonByStationAddress(String address) throws ParseException;
 	 
-	 List<CountDTO> getCountPersonBystation(String stationNumber) throws ParseException;
+	 CountDTO getCountPersonBystation(String stationNumber) throws ParseException;
 	 
 	 Firestation getFirestation(String address);
 	 

@@ -35,12 +35,18 @@ public class CountDTO {
 		this.sizeperson = sizeperson;
 	}
 
-	public List<PersonCountDTO> getPerson() {
+	public List<PersonCountDTO> getPersonList() {
 		return person;
 	}
 
-	public void setPerson(List<PersonCountDTO> person) {
+	public void setPersonList(List<PersonCountDTO> person) {
 		this.person = person;
 	}
 
+	@Override
+	public String toString() {
+		return "CountDTO [sizechild=" + sizechild + ", sizeperson=" + sizeperson + ", person=" + person + "]";
+	}
+
+	
 }
