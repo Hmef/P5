@@ -13,42 +13,63 @@ import com.openclassrooms.api.repository.Data;
 @Service
 public class MedicalRecordServiceImpl implements MedicalRecordService {
 
-
 	@Autowired
 	private MedicalRecordDAO medicalrecordDao;
-	
-	
+
 	public List<Medicalrecord> getAllMedicalrecord() {
 
 		return medicalrecordDao.getAll();
 	}
 
-	public void save(Medicalrecord medicalrecord) {
+	public Medicalrecord save(Medicalrecord requestedmedicalrecord) {
 
-		//Data.getMedicalrecords().add(medicalrecord);
-
-	}
-
-	public void update(Medicalrecord medicalrecord, String firstName) {
-
+		Medicalrecord createdmedicalrecord = new Medicalrecord();
 		
+		createdmedicalrecord.setFirstName(requestedmedicalrecord.getFirstName());
+		createdmedicalrecord.setLastName(requestedmedicalrecord.getLastName());
+		createdmedicalrecord.setBirthdate(requestedmedicalrecord.getBirthdate());
+		createdmedicalrecord.setAllergies(requestedmedicalrecord.getAllergies());
+		createdmedicalrecord.setMedications(requestedmedicalrecord.getMedications());
+
+		medicalrecordDao.save(createdmedicalrecord);
+
+		return createdmedicalrecord;
 
 	}
 
-	public void delete(Medicalrecord medicalrecord, String firstName) {
+	public Medicalrecord update(Medicalrecord requestedmedicalrecord, String firstName, String lastName) {
 
-	}
+		List<Medicalrecord> medicalrecordlist = medicalrecordDao.getAll();
 
-	public Medicalrecord getByName(String firstName) {
+		for (Medicalrecord updatedmedicalrecord : medicalrecordlist) {
+			if (updatedmedicalrecord.getFirstName().equals(requestedmedicalrecord.getFirstName())
+					&& updatedmedicalrecord.getLastName().equals(requestedmedicalrecord.getLastName())) {
 
-		for (Medicalrecord medicalrecord : Data.getMedicalrecords()) {
+				updatedmedicalrecord.setBirthdate(requestedmedicalrecord.getBirthdate());
+				updatedmedicalrecord.setAllergies(requestedmedicalrecord.getAllergies());
+				updatedmedicalrecord.setMedications(requestedmedicalrecord.getMedications());
 
-			if (medicalrecord.getFirstName().equals(firstName)) {
-
-				return medicalrecord;
+				medicalrecordDao.update(updatedmedicalrecord);
+				return updatedmedicalrecord;
 			}
 		}
-		
+
+		return null;
+	}
+
+	public Medicalrecord delete(String firstName, String lastName) {
+
+		List<Medicalrecord> medicalrecordlist = medicalrecordDao.getAll();
+
+		for (Medicalrecord medicalrecord : medicalrecordlist) {
+			if (medicalrecord.getFirstName().equals(firstName)
+					&& medicalrecord.getLastName().equals(lastName)) {
+
+				medicalrecordDao.delete(medicalrecord);
+			}
+
+		}
+
 		return null;
 	}
 

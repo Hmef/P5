@@ -18,7 +18,6 @@ public class ApiApplication {
 		
 		logger.info(" API Application ");
 		
-
 		  MapperService mapper = new MapperService();
 			
 		  mapper.readObjectFromJsonFile();

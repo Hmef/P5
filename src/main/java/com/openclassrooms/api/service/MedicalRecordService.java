@@ -11,15 +11,12 @@ public interface MedicalRecordService {
 	
 	List<Medicalrecord> getAllMedicalrecord();
 	
-	void save(Medicalrecord medicalrecord);
+	Medicalrecord save(Medicalrecord medicalrecord);
 	
-	void update(Medicalrecord medicalrecord, String firstName);
+	Medicalrecord update(Medicalrecord medicalrecord, String firstName, String lastName);
 	
-	void delete(Medicalrecord medicalrecord, String firstName);
+	Medicalrecord delete(String firstName, String lastName);
 	
-	Medicalrecord getByName(String firstName);
-	
-	//void updateP(Medicalrecord object, String firstname, String lastname);
 	
 	
 

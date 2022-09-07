@@ -65,25 +65,17 @@ public class PersonServiceImplTest {
 	public void updatePerson() {
 		
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
-
-		Person johnM = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "Newjaboyd@email.com");
 
 		List<Person> personlist = new ArrayList<Person>();
 		personlist.add(john);
-		personlist.add(jacob);
 		
 		when(personDao.getAll()).thenReturn(personlist);
 		
-		personservice.savePerson(john);
-		Person createdPerson = personservice.getByName("John", "Boyd");
+		Person updatedPerson = personservice.updatePerson(john, "John", "Boyd");
 		
-		assertEquals("John", createdPerson.getFirstName());   
-		assertEquals("Boyd", createdPerson.getLastName());
-
-		
-		Person updatedperson = personservice.updatePerson(john, "John", "Boyd");
-		assertEquals("jaboyd@email.com", updatedperson.getEmail());
+		//assertEquals("John", updatedPerson.getFirstName());   
+		//assertEquals("Boyd", updatedPerson.getLastName());
+		assertEquals("jaboyd@email.com", updatedPerson.getEmail());
 
 	}
 
@@ -92,14 +84,11 @@ public class PersonServiceImplTest {
 
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 		
-		
 		List<Person> savedpersonlist = new ArrayList<Person>(); 
 		savedpersonlist.add(personservice.savePerson(john));
 		int size = savedpersonlist.size();
 		
 		assertEquals(1, size);
-		//assertEquals("John", personservice.getByFirstName("John"));
-
 	}
 
 	@Test
@@ -107,14 +96,12 @@ public class PersonServiceImplTest {
 		
 
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
-		//Person jacob = new Person("Jacob", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6513", "drk@email.com");
 		
 		assertNull(personservice.deletePerson(john.getFirstName(), john.getLastName()));
 		
 		
 	}
-	
-	
+		
 	@Test
     public void groupedAssertions() {
 		

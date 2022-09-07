@@ -26,17 +26,11 @@ public interface ServiceClass {
 	 
 	 Map<String, List<HomeFloodDTO>> GetListHomeByCasern(String firestationNum) throws ParseException;
 	 
-	 Firestation getFirestationByStation(String station); ///
-	 
 	 List<String> getPhoneListByCasern(String numberFirestation);
 	 
 	 FireDTO getListPersonByAddressStation(String address) throws ParseException ;
 	 
-	 List<FirestationDTO> getPersonByStationAddress(String address) throws ParseException;
-	 
 	 CountDTO getCountPersonBystation(String stationNumber) throws ParseException;
-	 
-	 Firestation getFirestation(String address);  ///
 	 
 	 int calculteAge(String birthdate) throws ParseException;
 	 

@@ -12,8 +12,10 @@ public interface FirestationService {
 	
 	Firestation save(Firestation firestation);
 	
-	Firestation delete(String address, String station);
+	//Firestation delete(String address, String station);
 	
-	Firestation update(Firestation firestation, String address);
+	Firestation delete(String address);
+	
+	Firestation updateFirestation(Firestation firestation, String address);
 
 }

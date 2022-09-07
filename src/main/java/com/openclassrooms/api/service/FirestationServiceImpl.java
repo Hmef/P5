@@ -1,12 +1,5 @@
 package com.openclassrooms.api.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -15,19 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.api.dao.FirestationDAO;
-import com.openclassrooms.api.dao.PersonDAO;
-import com.openclassrooms.api.dto.ChildAlertDTO;
-import com.openclassrooms.api.dto.CountDTO;
-import com.openclassrooms.api.dto.FireDTO;
-import com.openclassrooms.api.dto.FirestationDTO;
-import com.openclassrooms.api.dto.HomeFloodDTO;
-import com.openclassrooms.api.dto.PersonCountDTO;
-import com.openclassrooms.api.dto.PersonMedicalRecordDTO;
-import com.openclassrooms.api.dto.PersonMedicalRecordFireDTO;
 import com.openclassrooms.api.model.Firestation;
-import com.openclassrooms.api.model.Medicalrecord;
-import com.openclassrooms.api.model.Person;
-import com.openclassrooms.api.repository.Data;
 
 @Service
 public class FirestationServiceImpl implements FirestationService {
@@ -57,33 +38,38 @@ public class FirestationServiceImpl implements FirestationService {
 
 	}
 
-	public Firestation delete(String address, String station) {
-
-		for (Firestation firestation : firestationdao.getAll()) {
-			if (firestation.getAddress().equals(address) && firestation.getStation().equals(station)) {
-
-				firestationdao.delete(firestation);
-				return null;
-			}
-		}
-
-		return null;  // Emplacement ???
-		
-	}
-
 	@Override
-	public Firestation update(Firestation requestedfirestation, String address) {
+	public Firestation updateFirestation(Firestation requestedfirestation, String address) {
 
-		for (Firestation updatedfirestation : firestationdao.getAll()) {
+		List<Firestation> firestationlist = firestationdao.getAll();
+		
+		for (Firestation updatedfirestation : firestationlist) {
 			if (updatedfirestation.getAddress().equals(address)) {
 
+				updatedfirestation.setAddress(requestedfirestation.getAddress());
 				updatedfirestation.setStation(requestedfirestation.getStation());
+				
+				firestationdao.update(updatedfirestation);
 				
 				return updatedfirestation;
 			}
 		}
 
 		return null;
+	}
+	
+	
+	public Firestation delete(String address) {
+
+		List<Firestation> firestationlist = firestationdao.getAll();
+		
+		for (Firestation firestation : firestationlist) {
+			if (firestation.getAddress().equals(address)) {
+
+				firestationdao.delete(firestation);
+			}
+		}
+		return null;  	
 	}
 
 	

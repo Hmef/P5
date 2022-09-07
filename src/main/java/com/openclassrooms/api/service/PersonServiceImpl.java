@@ -45,24 +45,7 @@ public class PersonServiceImpl implements PersonService {
 		return newperson;
 
 	}
-
-	@Override
-	public Person deletePerson(String firstName, String lastName) {
-
-		logger.info(" Delete Person  ");
-
-		List<Person> listperson = persondao.getAll();
-
-		for (Person person : listperson) {
-			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
-
-				persondao.delete(person);
-			}
-		}
-
-		return null;
-	}
-
+	
 	
 	@Override
 	public Person updatePerson(Person requestedperson, String firstName, String lastName) {
@@ -70,15 +53,11 @@ public class PersonServiceImpl implements PersonService {
 		logger.info(" Update Person ");
 
 		List<Person> personlist = persondao.getAll();
-		
-		//Person updatedperson = new Person();
 
 		for (Person updatedperson : personlist) {
 			if (updatedperson.getFirstName().equals(requestedperson.getFirstName())
 					&& updatedperson.getLastName().equals(requestedperson.getLastName())) {
 
-				
-				
 				// person.setFirstName(firstName); // don't change firstName & lastName
 				// person.setLastName(lastName);
 				updatedperson.setAddress(requestedperson.getAddress());
@@ -92,25 +71,28 @@ public class PersonServiceImpl implements PersonService {
 				return updatedperson;
 			}
 		}
-		
-		
-		return null;
-	}
 
-	@Override
-	public Person getByName(String firstName, String lastName) {
-		
-		List<Person> personlist = persondao.getAll();
-		
-		for(Person person : personlist) {
-			if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
-				return person;
-			}
-		}
-		
 		return null;
 	}
 
 	
+	@Override
+	public Person deletePerson(String firstName, String lastName) {
+
+		logger.info(" Delete Person  ");
+
+		List<Person> personlist = persondao.getAll();
+
+		for (Person person : personlist) {
+			if (person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+
+				persondao.delete(person);
+			}
+		}
+
+		return null;
+	}
+
+
 	
 }

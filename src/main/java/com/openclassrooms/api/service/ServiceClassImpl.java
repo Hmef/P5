@@ -101,22 +101,6 @@ public class ServiceClassImpl implements ServiceClass {
 		return emailList;
 
 	}
-	/*
-	 * @Override public Person getByName(String firstName, String lastName) {
-	 * 
-	 * logger.info(" Get Person By Name "); for (Person person : Data.getPersons())
-	 * {
-	 * 
-	 * if (person.getFirstName().equals(firstName) &&
-	 * person.getLastName().equals(lastName)) {
-	 * 
-	 * return person; } }
-	 * 
-	 * return null;
-	 * 
-	 * }
-	 * 
-	 */
 
 	@Override
 	public List<ChildAlertDTO> getChildByAddress(String address) throws ParseException {
@@ -226,6 +210,7 @@ public class ServiceClassImpl implements ServiceClass {
 		return personByAddressMap;
 	}
 
+	/*
 	@Override
 	public Firestation getFirestationByStation(String station) {
 
@@ -242,6 +227,7 @@ public class ServiceClassImpl implements ServiceClass {
 		return null;
 	}
 
+	*/
 	@Override
 	public List<String> getPhoneListByCasern(String numberFirestation) {
 
@@ -313,36 +299,6 @@ public class ServiceClassImpl implements ServiceClass {
 		return fireDto;
 	}
 
-	@Override
-	public List<FirestationDTO> getPersonByStationAddress(String address) throws ParseException {
-
-		logger.info(" Get Person By address ");
-		FirestationDTO firestationDto = new FirestationDTO();
-		List<FirestationDTO> firestationDtolist = new ArrayList<FirestationDTO>();
-
-		for (Firestation firestation : Data.getFirestations()) {
-
-			if (firestation.getAddress().equals(address)) {
-
-				firestationDto.setStation(firestation.getStation());
-			}
-		}
-
-		for (Person person : Data.getPersons()) {
-
-			if (person.getAddress().equals(address)) {
-
-				// firestationDto.setName(person.getFirstName().concat(person.getLastName()));
-				// firestationDto.setPhone(person.getPhone());
-
-				// firestationDtolist.add(firestationDto);
-				firestationDtolist.add(firestationDto);
-			}
-		}
-
-		return firestationDtolist;
-
-	}
 
 	@Override
 	public CountDTO getCountPersonBystation(String stationNumber) throws ParseException {
@@ -415,41 +371,8 @@ public class ServiceClassImpl implements ServiceClass {
 		return countDto;
 	}
 
+
 	
-	
-	public Firestation getFirestation(String address) {
-
-		for (Firestation firestation : Data.getFirestations()) {
-
-			if (firestation.getAddress().equals(address)) {
-
-				return firestation;
-			}
-		}
-
-		return null;
-	}
-	
-	
-
-	/*
-	@Override
-	public List<Person> getAddressPerson(String address) {
-
-		logger.info("get Person By address : " + address);
-		List<Person> addressPersonlist = new ArrayList<Person>();
-
-		for (Person person : Data.getPersons()) {
-			if (person.getAddress().equals(address)) {
-
-				addressPersonlist.add(person);
-				return addressPersonlist;
-			}
-		}
-		return null;
-	}
-
-*/
 	@Override
 	public int calculteAge(String birthdate) throws ParseException {
 

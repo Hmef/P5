@@ -46,11 +46,8 @@ public class MapperService {
 	/*
 	public void WriteJavaObjectInJsonObject(Data data) {
 		
-		
 		ObjectMapper objectmapper = new ObjectMapper();
-		
-		
-			
+	
 		 try {
 			 
 			objectmapper.writeValue(new File("src/main/resources/test.json"), Data.class);

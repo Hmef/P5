@@ -69,7 +69,6 @@ public class PersonControllerTest {
 		mockMvc.perform(get("/childAlert?address=1509 Culver St")).andExpect(status().isOk());
 	}
 	
-	// Response status expected <200> but was : <405>
 	@Test
 	public void createPersonTest_shouldReturnisCreated() throws Exception {
 		

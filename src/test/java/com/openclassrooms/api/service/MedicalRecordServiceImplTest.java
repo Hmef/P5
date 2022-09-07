@@ -1,7 +1,8 @@
 package com.openclassrooms.api.service;
 
 import static org.mockito.Mockito.when;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -37,20 +38,6 @@ public class MedicalRecordServiceImplTest{
 	private MedicalRecordDAO  medicalrecorddao;
 	
 	
-	@Before
-	public void setUpPerTest() {
-		
-		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
-		Medicalrecord FeliciaMedicalrecord = new Medicalrecord("Felicia", "Boyd", "01/08/1986", Arrays.asList("tetracyclaz:650mg") , Arrays.asList("xilliathal"));
-		
-		List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
-		medicalrecordlist.add(johnMedicalrecord);
-		medicalrecordlist.add(FeliciaMedicalrecord);
-		
-		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
-		
-	}
-	
 	@Test
 	public void getAllMedicalrecordTest() {
 
@@ -63,52 +50,62 @@ public class MedicalRecordServiceImplTest{
 		
 		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
 		
-		System.out.println("medicalrecordservice.getAllMedicalrecord() content : "+ medicalrecordservice.getAllMedicalrecord().size());
 		assertEquals(2, medicalrecordservice.getAllMedicalrecord().size());
 	}
-	
-	
-	
-	
-	@Test 
-	public void save() {
-		
-	}
 
-	
-	@Test
-	public Medicalrecord getByName() {
-		
-
-		//String firstName
-		return null;
-	}
 
 	@Test
 	public void saveTest() {
 		
 		//Medicalrecord medicalrecord
 		
+
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		
+		Medicalrecord createdmedicalrecord = medicalrecordservice.save(johnMedicalrecord);
+		
+		List<Medicalrecord> actuallist =new ArrayList<Medicalrecord>();
+		actuallist.add(createdmedicalrecord);
+		int size = actuallist.size();
+		
+		assertSame(1, size);
+		assertFalse(actuallist.isEmpty());
+		
 	}
 
 	@Test
 	public void updateTest() {
-	
-		// Medicalrecord medicalrecord
+
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord FeliciaMedicalrecord = new Medicalrecord("Felicia", "Boyd", "01/08/1986", Arrays.asList("tetracyclaz:650mg") , Arrays.asList("xilliathal"));
 		
+		List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(johnMedicalrecord);
+		medicalrecordlist.add(FeliciaMedicalrecord);
+		
+		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
+		
+		Medicalrecord updatedmedicalrecord = medicalrecordservice.update(FeliciaMedicalrecord, "Felicia", "Boyd");
+		
+		assertEquals(Arrays.asList("tetracyclaz:650mg"), updatedmedicalrecord.getMedications());
 	}
 
 	@Test
 	public void deleteTest() {
 		
-		
-		
-	}
 
-	@Test
-	public void updatePTest() {
-		// Medicalrecord object, String firstname, String lastname
+		Medicalrecord johnMedicalrecord = new Medicalrecord("John", "Boyd", "03/06/1984", Arrays.asList("aznol:350mg","hydrapermazol:100mg") , Arrays.asList("nillacilan"));
+		Medicalrecord FeliciaMedicalrecord = new Medicalrecord("Felicia", "Boyd", "01/08/1986", Arrays.asList("tetracyclaz:650mg") , Arrays.asList("xilliathal"));
 		
+		List<Medicalrecord> medicalrecordlist =  new ArrayList<Medicalrecord>();
+		medicalrecordlist.add(johnMedicalrecord);
+		medicalrecordlist.add(FeliciaMedicalrecord);
+		
+		when(medicalrecorddao.getAll()).thenReturn(medicalrecordlist);
+		
+		//Medicalrecord deletedmedicalrecord = medicalrecordservice.delete("Felicia", "Boyd");
+		
+		assertNull(medicalrecordservice.delete("Felicia", "Boyd"));
 	}
 	
 

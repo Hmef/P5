@@ -13,7 +13,6 @@ import com.openclassrooms.api.repository.Data;
 public class PersonDAO implements DAO<Person>{
 
 	
-
 	@Override
 	public List<Person> getAll() {
 		

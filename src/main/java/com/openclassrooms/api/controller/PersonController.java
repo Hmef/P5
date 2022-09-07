@@ -34,7 +34,6 @@ public class PersonController {
 	@Autowired
 	private ServiceClass service;
 
-
 	@GetMapping(value = "/persons")
 	public List<Person> getAllPersons() {
 
@@ -42,7 +41,6 @@ public class PersonController {
 
 		return personservice.getAll();
 	}
-
 
 	@GetMapping(value = "/communityEmail")
 	public List<String> getEmail(String city) {
@@ -67,7 +65,7 @@ public class PersonController {
 	@PostMapping(value = "/persons")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) {
 
-		logger.info("Create a person --> http://localhost:9091/persons/");
+		logger.info("Create a person --> post http://localhost:9091/persons/");
 		logger.info("body : " + person);
 
 		Person createdperson = personservice.savePerson(person);
@@ -91,7 +89,6 @@ public class PersonController {
 		Person updatedPerson = personservice.updatePerson(person, firstName, lastName);
 
 		if (updatedPerson == null) {
-
 			logger.error(" Response Not Found ! ");
 			return ResponseEntity.notFound().build();
 		} else {
@@ -106,9 +103,15 @@ public class PersonController {
 			@PathVariable("lastName") String lastName) {
 
 		logger.info(" Delete Operation ");
-		personservice.deletePerson(firstName, lastName);
+		Person deletedperson = personservice.deletePerson(firstName, lastName);
 
-		return ResponseEntity.noContent().build();
+		if( deletedperson == null ) {
+			
+			return ResponseEntity.noContent().build();
+		}
+		
+		return null;
+		
 		// return "Deleted Successfully";
 
 	}

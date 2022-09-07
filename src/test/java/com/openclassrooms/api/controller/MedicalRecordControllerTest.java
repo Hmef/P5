@@ -1,68 +1,79 @@
 package com.openclassrooms.api.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.api.model.Medicalrecord;
-
+import com.openclassrooms.api.model.Person;
+import com.openclassrooms.api.service.MedicalRecordService;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@EnableAutoConfiguration(exclude= SecurityAutoConfiguration.class)
+@ExtendWith(MockitoExtension.class)
 public class MedicalRecordControllerTest {
-	
-	
 
 	@Autowired
 	private MockMvc mockMvc;
-	
-	@Autowired
-	private ObjectMapper mapper;
-	
+
+	@MockBean
+	private MedicalRecordService medicalrecordservice;
+
 	@Test
-	public void getAllMedicalRecordTest() throws Exception {
-		
+	public void getAllMedicalRecordTest_shouldReturnOk() throws Exception {
+
+		when(medicalrecordservice.getAllMedicalrecord()).thenReturn(new ArrayList<>());
 		mockMvc.perform(get("/medicalrecord")).andExpect(status().isOk());
 	}
-	
+
 	@Test
 	public void createMedicalRecordTest() throws Exception {
+
+		Medicalrecord rogerMedicalrecord = new Medicalrecord("Roger", "Boyd", "09/06/2017", Arrays.asList(" "), Arrays.asList(" "));
 		
-		Medicalrecord medicalrecord = new Medicalrecord();
-		medicalrecord.setFirstName("John");
-		medicalrecord.setLastName("Boyd");
-		medicalrecord.setBirthdate("03/06/1984");
-		medicalrecord.setMedications(Arrays.asList("aznol:350mg","hydrapermazol:100mg"));
-		medicalrecord.setAllergies(Arrays.asList("nillacilan"));
-		
-		List<Medicalrecord> medicalrecordlist = new ArrayList<Medicalrecord>();
-		medicalrecordlist.add(medicalrecord);
-		
-		mockMvc.perform(get("/medicalrecord")).andExpect(status().isCreated());
-	}
-	
-	@Test
-	public void updateMedicarecordTest() {
-		
+		when(medicalrecordservice.save(any())).thenReturn(rogerMedicalrecord); 
+
+		String requestjson = "{ \"firstName\": \"Roger\",\"lastName\":\"Boyd\",\"birthdate\": \"09/06/2017\", \"medications\":[], \"allergies\":[] \"}";
+
+		mockMvc.perform(post("/medicalrecord").contentType("application/json").content(requestjson)).andExpect(status().is(200));
 		
 	}
-	
+
 	@Test
-	public void deleteMedicalrecordTest() {
+	public void updateMedicarecordTest_shouldReturnStatus200() throws Exception {
+
+		Medicalrecord rogerMedicalrecord = new Medicalrecord("Roger", "Boyd", "09/06/2017", Arrays.asList(" "), Arrays.asList(" "));
 		
+		when(medicalrecordservice.update(any(), any(), any())).thenReturn(rogerMedicalrecord);  
+		
+		String requestjson = "{ \"firstName\": \"Roger\",\"lastName\":\"Boyd\",\"birthdate\": \"09/06/2017\", \"medications\":[], \"allergies\":[] \"}";
+
+		mockMvc.perform(put("/medicalrecord/firstName=Roger&lastName=Boyd").contentType("application/json").content(requestjson)).andExpect(status().is(200));
+
+	}
+
+	@Test
+	public void deleteMedicalrecordTest() throws Exception {
+
+		when(medicalrecordservice.delete("Roger", "Boyd")).thenReturn(null);
+		mockMvc.perform(delete("/medicalrecord/firstName=Roger&lastName=Boyd")).andExpect(status().isNoContent());
+	
 	}
 
 }

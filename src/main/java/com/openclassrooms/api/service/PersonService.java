@@ -13,7 +13,5 @@ public interface PersonService {
 	Person savePerson(Person person);
 
 	Person deletePerson(String firstName, String lastName);
-	
-	Person getByName(String firstName, String lastName);
 
 }
