@@ -3,16 +3,11 @@ package com.openclassrooms.api.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Repository;
-
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.api.repository.Data;
+import com.openclassrooms.api.data.Data;
 
-
-@Configuration
 public class MapperService {
 
 	public void readObjectFromJsonFile() {
@@ -42,23 +37,5 @@ public class MapperService {
 
 	}
 	
-	
-	/*
-	public void WriteJavaObjectInJsonObject(Data data) {
-		
-		ObjectMapper objectmapper = new ObjectMapper();
-	
-		 try {
-			 
-			objectmapper.writeValue(new File("src/main/resources/test.json"), Data.class);
-			
-			
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	*/
 
 }

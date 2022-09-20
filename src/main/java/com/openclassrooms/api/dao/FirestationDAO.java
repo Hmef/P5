@@ -3,10 +3,9 @@ package com.openclassrooms.api.dao;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
+import com.openclassrooms.api.data.Data;
 import com.openclassrooms.api.model.Firestation;
-import com.openclassrooms.api.repository.Data;
 
 @Repository 
 public class FirestationDAO implements DAO<Firestation>{

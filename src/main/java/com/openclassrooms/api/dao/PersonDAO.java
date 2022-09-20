@@ -3,11 +3,12 @@ package com.openclassrooms.api.dao;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.api.data.Data;
 import com.openclassrooms.api.model.Person;
-import com.openclassrooms.api.repository.Data;
 
 @Repository
 public class PersonDAO implements DAO<Person>{
@@ -24,6 +25,7 @@ public class PersonDAO implements DAO<Person>{
 		
 		Data.getPersons().add(person);
 		
+		
 		return person;
 	}
 
@@ -32,7 +34,6 @@ public class PersonDAO implements DAO<Person>{
 	public Person update(Person person) {
 
 		Data.getPersons().add(person);
-		
 		return person;
 	
 	}

@@ -6,9 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 
 
-public interface DAO <T>{  // Generic Class 
+public interface DAO <T>{  
 	 
-	
 	List<T> getAll();
 	
 	T save(T object);

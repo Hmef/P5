@@ -3,7 +3,6 @@ package com.openclassrooms.api.service;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
-
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -15,16 +14,16 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.openclassrooms.api.dao.PersonDAO;
+import com.openclassrooms.api.data.Data;
 import com.openclassrooms.api.model.Person;
 
 
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(Data.class)
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)
 public class PersonServiceImplTest {
@@ -35,6 +34,8 @@ public class PersonServiceImplTest {
 	
 	@Mock
 	private PersonDAO personDao;  // Fake Object
+
+	
 	
 	@BeforeEach
 	private void setUpPerTest() {
@@ -55,7 +56,10 @@ public class PersonServiceImplTest {
 		allPerson.add(jacob); 
 		
 		when(personDao.getAll()).thenReturn(allPerson);
-
+		
+		//PowerMockito.mockStatic(Data.class);
+		//Mockito.when(Data.getPersons()).thenReturn(personlist);
+		
 		int size = personservice.getAll().size();
 		assertEquals(2, size); 
 	}
@@ -66,6 +70,7 @@ public class PersonServiceImplTest {
 		
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
 
+		
 		List<Person> personlist = new ArrayList<Person>();
 		personlist.add(john);
 		
@@ -94,9 +99,12 @@ public class PersonServiceImplTest {
 	@Test
 	public void deletePersonTest() {
 		
-
 		Person john = new Person("John", "Boyd", "1509 Culver St", "Culver", "97451", "841-874-6512", "jaboyd@email.com");
+
+		List<Person> personlist = new ArrayList<Person>();
+		personlist.add(john);
 		
+		when(personDao.getAll()).thenReturn(personlist);
 		assertNull(personservice.deletePerson(john.getFirstName(), john.getLastName()));
 		
 		

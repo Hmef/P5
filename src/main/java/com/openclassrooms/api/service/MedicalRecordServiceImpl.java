@@ -1,6 +1,5 @@
 package com.openclassrooms.api.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.api.dao.MedicalRecordDAO;
 import com.openclassrooms.api.model.Medicalrecord;
-import com.openclassrooms.api.repository.Data;
 
 @Service
 public class MedicalRecordServiceImpl implements MedicalRecordService {

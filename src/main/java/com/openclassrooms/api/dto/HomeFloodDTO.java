@@ -73,11 +73,6 @@ public class HomeFloodDTO {
 		this.allergies = allergies;
 	}
 
-	@Override
-	public String toString() {
-		return "HomeFloodDTO [name=" + name + ", phone=" + phone + ", address=" + address + ", age=" + age
-				+ ", medications=" + medications + ", allergies=" + allergies + "]";
-	}
 
 	
 	

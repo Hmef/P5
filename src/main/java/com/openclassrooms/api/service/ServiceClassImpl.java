@@ -21,7 +21,6 @@ import com.openclassrooms.api.dao.PersonDAO;
 import com.openclassrooms.api.dto.ChildAlertDTO;
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
-import com.openclassrooms.api.dto.FirestationDTO;
 import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.dto.PersonAlertDTO;
 import com.openclassrooms.api.dto.PersonCountDTO;
@@ -30,7 +29,6 @@ import com.openclassrooms.api.dto.PersonMedicalRecordFireDTO;
 import com.openclassrooms.api.model.Firestation;
 import com.openclassrooms.api.model.Medicalrecord;
 import com.openclassrooms.api.model.Person;
-import com.openclassrooms.api.repository.Data;
 
 @Service
 public class ServiceClassImpl implements ServiceClass {
@@ -210,33 +208,12 @@ public class ServiceClassImpl implements ServiceClass {
 		return personByAddressMap;
 	}
 
-	/*
-	@Override
-	public Firestation getFirestationByStation(String station) {
-
-		logger.info("Get Firestaton By Station ");
-
-		for (Firestation firestation : Data.getFirestations()) {
-
-			if (firestation.getStation().equals(station)) {
-
-				return firestation;
-			}
-		}
-
-		return null;
-	}
-
-	*/
 	@Override
 	public List<String> getPhoneListByCasern(String numberFirestation) {
 
 		logger.info(" PhoneAlert Endpoint ");
 		logger.info(" Get the phone List coverd by this station's number : " + numberFirestation);
 		List<String> phoneList = new ArrayList<>();
-		// Get Adress for this number station
-		// if Adress of this number station equals the adress of person --> So, get the
-		// phone of this person
 		for (Firestation firestation : firestationdao.getAll()) {
 
 			for (Person person : persondao.getAll()) {
@@ -380,8 +357,6 @@ public class ServiceClassImpl implements ServiceClass {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		LocalDate today = LocalDate.now();
-
-		// ZoneId zoneId = ZoneId.of("Europe/Paris");
 
 		LocalDate birthDate = dateFormat.parse(birthdate).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 

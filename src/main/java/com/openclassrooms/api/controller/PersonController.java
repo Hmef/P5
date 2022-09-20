@@ -3,8 +3,6 @@ package com.openclassrooms.api.controller;
 import java.text.ParseException;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +38,7 @@ public class PersonController {
 		logger.info("Get List of persons --> http://localhost:9091/persons/ ");
 
 		return personservice.getAll();
+		//return Data.getPersons();
 	}
 
 	@GetMapping(value = "/communityEmail")

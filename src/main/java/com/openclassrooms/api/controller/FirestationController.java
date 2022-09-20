@@ -19,7 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
-import com.openclassrooms.api.dto.FirestationDTO;
 import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.model.Firestation;
 import com.openclassrooms.api.service.FirestationService;
@@ -41,14 +40,6 @@ public class FirestationController {
 
 		return firestationservice.getAllFirestations();
 	}
-
-	/*
-	 * @GetMapping(value = "/firestation") public Firestation getFirestation(String
-	 * address) {
-	 * 
-	 * return service.getFirestation(address); // in firestation service }
-	 * 
-	 */
 
 	@GetMapping(value = "/fire")
 	public FireDTO getPersonByStationAdress(String address) throws ParseException {
@@ -76,14 +67,6 @@ public class FirestationController {
 
 	}
 
-	/*
-	@GetMapping(value = "/personAddressByStation")
-	public List<FirestationDTO> getPersonByStationAddress(String address) throws ParseException {
-
-		return service.getPersonByStationAddress(address);
-	}
-
-*/
 	@GetMapping(value = "/firestationCount")
 	public CountDTO getCountPersonBystation(String stationNumber) throws ParseException {
 
@@ -122,7 +105,6 @@ public class FirestationController {
 		}
 
 	}
-	
 	
 	@DeleteMapping(value="/firestation/{address}")
 	public ResponseEntity<Firestation> deleteFirestation(@PathVariable String address){

@@ -78,11 +78,6 @@ public class Medicalrecord {
 		this.allergies = allergies;
 	}
 
-	@Override
-	public String toString() {
-		return "Medicalrecord [firstName=" + firstName + ", lastName=" + lastName + ", birthdate=" + birthdate
-				+ ", medications=" + medications + ", allergies=" + allergies + "]";
-	}
 
 	
 }

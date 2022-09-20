@@ -7,7 +7,6 @@ import java.util.Map;
 import com.openclassrooms.api.dto.ChildAlertDTO;
 import com.openclassrooms.api.dto.CountDTO;
 import com.openclassrooms.api.dto.FireDTO;
-import com.openclassrooms.api.dto.FirestationDTO;
 import com.openclassrooms.api.dto.HomeFloodDTO;
 import com.openclassrooms.api.dto.PersonMedicalRecordDTO;
 import com.openclassrooms.api.model.Firestation;
@@ -19,8 +18,6 @@ public interface ServiceClass {
 	 List<PersonMedicalRecordDTO> getPersonInfo(String firstName, String lastName) throws ParseException;
 	 
 	 List<String> getEmailByCity(String city);
-	 
-	 //Person getByName(String firstName, String lastName);
 	 
 	 List<ChildAlertDTO> getChildByAddress(String address) throws ParseException;
 	 

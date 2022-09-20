@@ -373,7 +373,7 @@ public class ServiceClassImplTest {
 	
 	// Flood EndPoint 
 	@Test
-	public void GetListHomeByCasern_ShouldReturnMapOfPersonGroupedByAddress() throws ParseException {
+	public void getListHomeByCasern_ShouldReturnMapOfPersonGroupedByAddress() throws ParseException {
 		
 		Firestation firestation = new Firestation("892 Downing Ct", "2");
 		Firestation firestationn = new Firestation("951 LoneTree Rd", "2");

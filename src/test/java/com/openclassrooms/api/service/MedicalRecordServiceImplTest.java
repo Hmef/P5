@@ -23,8 +23,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.openclassrooms.api.dao.MedicalRecordDAO;
+import com.openclassrooms.api.data.Data;
 import com.openclassrooms.api.model.Medicalrecord;
-import com.openclassrooms.api.repository.Data;
 
 @RunWith(MockitoJUnitRunner.class)
 @ExtendWith(MockitoExtension.class)

@@ -1,4 +1,4 @@
-package com.openclassrooms.api.repository;
+package com.openclassrooms.api.data;
 
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class Data {
 	}
 
 	public void setPersons(List<Person> persons) {
-		this.persons = persons;
+		Data.persons = persons;
 	}
 
 	public static List<Medicalrecord> getMedicalrecords() {
@@ -37,7 +37,7 @@ public class Data {
 	}
 
 	public void setMedicalrecords(List<Medicalrecord> medicalrecords) {
-		this.medicalrecords = medicalrecords;
+		Data.medicalrecords = medicalrecords;
 	}
 
 	public static List<Firestation> getFirestations() {
@@ -45,12 +45,9 @@ public class Data {
 	}
 
 	public void setFirestations(List<Firestation> firestations) {
-		this.firestations = firestations;
+		Data.firestations = firestations;
 	}
 
-	
-	
-	
 	
 	
 

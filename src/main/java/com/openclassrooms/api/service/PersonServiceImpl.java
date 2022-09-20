@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.api.dao.PersonDAO;
+import com.openclassrooms.api.data.Data;
 import com.openclassrooms.api.model.Person;
 
 @Service
@@ -21,7 +22,7 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<Person> getAll() {
 
-		return persondao.getAll();
+		return Data.getPersons();
 
 	}
 

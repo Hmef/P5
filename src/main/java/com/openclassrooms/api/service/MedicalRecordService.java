@@ -16,8 +16,5 @@ public interface MedicalRecordService {
 	Medicalrecord update(Medicalrecord medicalrecord, String firstName, String lastName);
 	
 	Medicalrecord delete(String firstName, String lastName);
-	
-	
-	
 
 }
