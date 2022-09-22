@@ -45,13 +45,9 @@ import com.openclassrooms.api.model.Person;
 @ExtendWith(MockitoExtension.class)
 public class ServiceClassImplTest {
 
-	private Logger logger  = LoggerFactory.getLogger(ServiceClassImplTest.class);
 	
 	@InjectMocks
 	private ServiceClassImpl service; // Class Under Test
-
-	@Mock
-	private ObjectMapper objectmapper;
 	
 	@Mock
 	private PersonDAO persondao;
@@ -157,7 +153,6 @@ public class ServiceClassImplTest {
 		memberAlert.setAge(sophiaAge);
 		
 		
-		//int warrenAge = service.calculteAge(WarrenMedicalrecord.getBirthdate());
 		int warrenAge = 37;
 		PersonAlertDTO secondMemberAlert = new PersonAlertDTO("Warren", "Zemicks", warrenAge);
 		
@@ -166,14 +161,7 @@ public class ServiceClassImplTest {
 		memberAlertList.add(secondMemberAlert);
 		
 		ChildAlertDTO childAlert = new ChildAlertDTO("Zach", "Zemicks", 5, memberAlertList);
-		/*
-		ChildAlertDTO childAlert = new ChildAlertDTO();
-		childAlert.setFirstname(ZachChild.getFirstName());
-		childAlert.setLastname(ZachChild.getLastName());
-		childAlert.setAge(5);
-		childAlert.setPersonalert(memberAlertList);
 		
-		*/
 		List<ChildAlertDTO> expectedChildAlertList = new ArrayList<ChildAlertDTO>();
 		expectedChildAlertList.add(childAlert);
 		
@@ -185,13 +173,6 @@ public class ServiceClassImplTest {
 		assertNotNull(size);
 		assertTrue(childAlertt.getAge() == 5);
 		assertSame(expectedChildAlertList.get(0).getFirstname(), actualChildAlertList.get(0).getFirstname());
-		
-	}
-
-	@Test
-	public void getFirestationByStation() {
-		// Firestation
-		//String station
 		
 	}
 

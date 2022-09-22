@@ -353,7 +353,7 @@ public class ServiceClassImpl implements ServiceClass {
 	@Override
 	public int calculteAge(String birthdate) throws ParseException {
 
-		logger.info("Calculate Age for this Birthdate : " + birthdate);
+		logger.debug("Calculate Age for this Birthdate : " + birthdate);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 		LocalDate today = LocalDate.now();

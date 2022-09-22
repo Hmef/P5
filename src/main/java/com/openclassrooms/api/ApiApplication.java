@@ -11,18 +11,17 @@ import com.openclassrooms.api.ObjectMapper.MapperService;
 public class ApiApplication {
 
 	private static final Logger logger = LogManager.getLogger("ApiApplication");
-	
-	
+
 	public static void main(String[] args) {
-		
-SpringApplication.run(ApiApplication.class, args);
-		
+
+		SpringApplication.run(ApiApplication.class, args);
+
 		logger.info(" API Application ");
-		
-		  MapperService mapper = new MapperService();
-			
-		  mapper.readObjectFromJsonFile();
-		  
+
+		MapperService mapper = new MapperService();
+
+		mapper.readObjectFromJsonFile();
+
 	}
 
 }

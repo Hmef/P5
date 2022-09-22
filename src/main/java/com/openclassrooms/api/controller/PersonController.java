@@ -35,28 +35,41 @@ public class PersonController {
 	@GetMapping(value = "/persons")
 	public List<Person> getAllPersons() {
 
-		logger.info("Get List of persons --> http://localhost:9091/persons/ ");
+		logger.info("Get a List of persons --> http://localhost:9091/persons/ ");
 
 		return personservice.getAll();
-		//return Data.getPersons();
 	}
 
 	@GetMapping(value = "/communityEmail")
 	public List<String> getEmail(String city) {
 
-		return service.getEmailByCity(city);
+		logger.info("GET http://localhost:9091/communityEmail?city=<city>");
+		
+		List<String> emailList = null;
+		
+		try {
+			emailList = service.getEmailByCity(city);
+			logger.info(emailList.toString());
+			
+		}catch (Exception e){
+			logger.error("Exception Error : " + e);
+		}
+		
+		return emailList;
 
 	}
 
 	@GetMapping(value = "/personInfo")
 	public List<PersonMedicalRecordDTO> getPersonInfo(String firstName, String lastName) throws ParseException {
 
+		logger.info("GET http://localhost:9091/personInfo?firstName=<firstName>&lastName=<lastName> ");
 		return service.getPersonInfo(firstName, lastName);
 	}
 
 	@GetMapping(value = "/childAlert")
 	public List<ChildAlertDTO> getChildByAddress(String address) throws ParseException {
 
+		logger.info("GET http://localhost:9091/childAlert?address=<address>");
 		return service.getChildByAddress(address);
 	}
 

@@ -24,6 +24,8 @@ import com.openclassrooms.api.model.Firestation;
 import com.openclassrooms.api.service.FirestationService;
 import com.openclassrooms.api.service.ServiceClass;
 
+import io.micrometer.core.ipc.http.HttpSender.Request;
+
 @RestController
 public class FirestationController {
 
@@ -38,23 +40,27 @@ public class FirestationController {
 	@GetMapping(value = "/firestation")
 	public List<Firestation> getFirestations() {
 
+		logger.info("GET a List of Firestations --> http://localhost:9091/firestation/ ");
+		logger.info("" + firestationservice.getAllFirestations());
+		//logger.info("get request body" + );
+		
 		return firestationservice.getAllFirestations();
 	}
 
 	@GetMapping(value = "/fire")
-	public FireDTO getPersonByStationAdress(String address) throws ParseException {
+	public ResponseEntity<FireDTO> getPersonByStationAdress(String address) throws ParseException {
 
-		logger.info("Get http://localhost:8080/fire?address=<address>");
+		logger.info("GET http://localhost:9091/fire?address=<address>");
 		logger.info("Get a List of persons Live in this address & NumberStation");
 
-		return service.getListPersonByAddressStation(address);
-
+		//return service.getListPersonByAddressStation(address);
+		return ResponseEntity.ok(service.getListPersonByAddressStation(address));
 	}
 
 	@GetMapping(value = "/flood/stations")
 	public Map<String, List<HomeFloodDTO>> getListHomeByCasern(String stationNumber) throws ParseException {
 
-		logger.info("Get http://localhost:8080/flood/stations?stations=<a list of station_numbers>");
+		logger.info("GET http://localhost:9091/flood/stations?stations=<station_numbers>");
 
 		return service.GetListHomeByCasern(stationNumber);
 
@@ -63,6 +69,7 @@ public class FirestationController {
 	@GetMapping(value = "/phoneAlert")
 	public List<String> getPhoneListByCasern(String firestationNumber) {
 
+		logger.info("GET http://localhost:9091/phoneAlert?firestation=<firestation_number>");
 		return service.getPhoneListByCasern(firestationNumber);
 
 	}
@@ -70,6 +77,7 @@ public class FirestationController {
 	@GetMapping(value = "/firestationCount")
 	public CountDTO getCountPersonBystation(String stationNumber) throws ParseException {
 
+		logger.info(" GET http://localhost:9091/firestation?stationNumber=<station_number>");
 		return service.getCountPersonBystation(stationNumber);
 	}
 

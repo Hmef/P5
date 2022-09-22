@@ -29,7 +29,7 @@ public class MedicalRecordController {
 	@GetMapping(value = "/medicalrecord")
 	public List<Medicalrecord> getAllMedicalRecord() {
 
-		logger.info(" Get List of Medical Record --> http://localhost:9091/medicalrecord/");
+		logger.info(" Get a List of Medical Records --> http://localhost:9091/medicalrecord/");
 
 		return medicalrecordservice.getAllMedicalrecord();
 	}
